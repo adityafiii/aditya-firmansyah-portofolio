@@ -81,19 +81,17 @@ export default function Navbar() {
           </svg>
         </button>
 
-        {/* Link Navigasi (dengan animasi masuk dari atas menggunakan transition) */}
+        {/* Link Navigasi (Ukuran Teks Diperbesar & Animasi Hover & Animasi Masuk) */}
         {navLinks.map((link, index) => (
           <Link
-            key={link.name}
+            key={link.name} // Key untuk setiap item dalam map
             href={link.href}
             className={`
               text-white text-5xl font-bold hover:text-blue-400 inline-block
-              transform hover:scale-120
-              transition-all duration-500 ease-out // Durasi transisi untuk animasi masuk
-              ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'} // Kondisi akhir vs awal
+              transform hover:scale-120 transition-all duration-1000 transition-transform
+              ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'} // Animasi hanya saat menu terbuka
             `}
-            // Menerapkan transition-delay secara kondisional
-            style={{ transitionDelay: isMenuOpen ? `${0.1 + (index * 0.1)}s` : '0s' }}
+            style={{ transitionDelay: isMenuOpen ? `${0.1 + (index * 0.1)}s` : '0s' }} // Staggered delay
             onClick={handleNavLinkClick}
           >
             {link.name}

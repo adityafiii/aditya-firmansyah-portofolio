@@ -1,11 +1,7 @@
-// tailwind.config.js
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-    // ...
-  plugins: [
-    require('@tailwindcss/line-clamp'), // Tambahkan baris ini
-  ],
-  
+// tailwind.config.ts
+import type { Config } from "tailwindcss";
+
+const config: Config = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -30,9 +26,9 @@ module.exports = {
         },
         pulseSubtle: {
           '0%, 100%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.01)' },
+          '50%': { transform: 'scale(1.01)' }, // Membesar sedikit 1%
         },
-        // PERUBAHAN DI SINI: waveScale dibuat lebih berasa
+        // Keyframes untuk efek gelombang teks
         waveScale: {
           '0%, 100%': { transform: 'scale(1) translateY(0px)' },
           '50%': { transform: 'scale(1.2) translateY(-10px)' }, // Membesar 20% dan naik 10px
@@ -45,8 +41,8 @@ module.exports = {
         'fade-in-up-delay-200': 'fadeInUp 0.6s ease-out 0.2s forwards',
         'fade-in-up-delay-300': 'fadeInUp 0.6s ease-out 0.3s forwards',
         'fade-in-right-delay-400': 'fadeInRight 0.6s ease-out 0.4s forwards',
-        'pulse-subtle': 'pulseSubtle 3s ease-in-out infinite',
-        // Animasi wave-text menggunakan waveScale
+        'pulse-subtle': 'pulseSubtle 3s ease-in-out infinite', // Untuk foto profil
+        // Animasi untuk gelombang teks, berulang terus-menerus
         'wave-text': 'waveScale 1.5s ease-in-out infinite',
       },
     },

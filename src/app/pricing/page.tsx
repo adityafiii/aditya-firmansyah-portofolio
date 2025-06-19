@@ -1,5 +1,5 @@
 // src/app/pricing/page.tsx
-'use client'; // PENTING: Tambahkan directive ini karena menggunakan hook React
+'use client'; // PENTING: Directive ini diperlukan karena menggunakan hook React
 import Link from 'next/link';
 import { useInView } from '@/hooks/useInView'; // Import hook useInView
 
@@ -56,14 +56,13 @@ export default function PricingPage() {
   const animatedInClasses = 'opacity-100 translate-y-0';
   const revealY = 'translate-y-20'; // Dari 20px ke bawah
 
-  // Hooks untuk setiap section
+  // Hooks untuk setiap section. Memberitahu TypeScript bahwa ref ini akan ke HTMLElement.
   const [heroRef, heroInView] = useInView<HTMLElement>({ threshold: 0.1 });
   const [plansRef, plansInView] = useInView<HTMLElement>({ threshold: 0.1 });
   const [faqRef, faqInView] = useInView<HTMLElement>({ threshold: 0.1 });
 
 
-  return (
-    <main className="min-h-screen pt-16 bg-gray-900 text-white overflow-hidden"> {/* overflow-hidden di main */}
+  return (<main className="min-h-screen pt-16 bg-gray-900 text-white overflow-hidden">
       {/* Bagian Hero untuk Halaman Pricing */}
       <section 
         ref={heroRef}
@@ -163,7 +162,6 @@ export default function PricingPage() {
             <p>
               Ya, saya menyediakan dukungan pasca-peluncuran untuk memastikan website Anda berjalan lancar. Detail dukungan akan disepakati dalam proposal.
             </p>
-            {/* Tambahkan lebih banyak FAQ */}
           </div>
         </div>
       </section>

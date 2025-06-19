@@ -1,7 +1,9 @@
 // src/components/ProjectCard.tsx
 import Image from 'next/image';
+// Import Link dihapus karena tidak digunakan di sini
+// import Link from 'next/link'; 
 import { Project } from '@/lib/data'; // Import tipe Project
-import React from 'react'; // Import React jika belum ada
+import React from 'react';
 
 type ProjectCardProps = {
   project: Project;
@@ -20,9 +22,9 @@ export default function ProjectCard({ project, className, style }: ProjectCardPr
         <Image
           src={project.imageUrl}
           alt={project.title}
-          layout="fill"
-          objectFit="cover"
-          className="transition-transform duration-300 group-hover:scale-110"
+          layout="fill" // Menggunakan layout="fill" untuk mengisi kontainer
+          objectFit="cover" // Memastikan gambar menutupi area tanpa terdistorsi
+          className="transition-transform duration-300 group-hover:scale-110" // Efek zoom pada hover
         />
         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <p className="text-white text-lg font-semibold px-4 py-2 bg-blue-600 rounded-lg">
@@ -44,7 +46,7 @@ export default function ProjectCard({ project, className, style }: ProjectCardPr
           ))}
         </div>
 
-        {/* Tombol Aksi */}
+        {/* Tombol Aksi (menggunakan a tag HTML biasa) */}
         <div className="flex flex-wrap gap-4 mt-4">
           {project.githubUrl && (
             <a
