@@ -13,6 +13,7 @@ export function useInView<T extends HTMLElement>(options?: IntersectionObserverI
   const [isIntersecting, setIsIntersecting] = useState(false);
 
   useEffect(() => {
+    const currentRef = ref.current;
     // Pastikan observer hanya dibuat sekali
     let observer: IntersectionObserver | null = null;
 
