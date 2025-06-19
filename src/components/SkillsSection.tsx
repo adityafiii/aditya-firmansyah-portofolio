@@ -6,19 +6,19 @@ import { useInView } from '@/hooks/useInView'; // Import hook useInView
 
 // Anda bisa membuat array objek untuk daftar skill agar lebih mudah dikelola
 const skills = [
-  { name: 'JavaScript (ES6+)', category: 'Bahasa Pemrograman' },
   { name: 'TypeScript', category: 'Bahasa Pemrograman' },
-  { name: 'React.js', category: 'Framework Frontend' },
   { name: 'Next.js', category: 'Framework React' },
   { name: 'Tailwind CSS', category: 'Styling' },
-  { name: 'Node.js', category: 'Backend Runtime' },
-  { name: 'Express.js', category: 'Framework Backend' },
-  { name: 'MongoDB', category: 'Database (NoSQL)' },
-  { name: 'PostgreSQL', category: 'Database (SQL)' },
   { name: 'Git & GitHub', category: 'Version Control' },
-  { name: 'RESTful APIs', category: 'Konsep' },
   { name: 'Responsif Design', category: 'Konsep' },
   { name: 'UI/UX Principles', category: 'Desain' },
+  { name: 'Figma', category: 'Tools Desain' },
+  { name: 'AI', category: 'Source of Idea' },
+  { name: 'Photography', category: 'Art' },
+  { name: 'Guitar', category: 'Music' },
+  { name: 'Video Editor', category: 'Design' },
+  { name: 'Microsoft Office', category: 'Document' },
+  
   // Tambahkan skill Anda yang lain di sini
 ];
 

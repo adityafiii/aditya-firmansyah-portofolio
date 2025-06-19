@@ -33,13 +33,8 @@ export default function AboutSection() {
           className={`text-lg md:text-xl leading-relaxed mb-6 ${animationClasses} ${inView ? animatedInClasses : textAnimation}`} 
           style={{ transitionDelay: '0.1s' }} // Delay tambahan untuk p pertama
         >
-          Saya seorang **[Profesi Anda, misalnya: Pengembang Web Front-end]** dengan pengalaman dalam membangun aplikasi web yang responsif, intuitif, dan performa tinggi. Saya memiliki passion dalam mengubah ide menjadi solusi digital yang fungsional dan estetis.
-        </p>
-        <p 
-          className={`text-lg md:text-xl leading-relaxed mb-8 ${animationClasses} ${inView ? animatedInClasses : textAnimation}`} 
-          style={{ transitionDelay: '0.2s' }} // Delay tambahan untuk p kedua
-        >
-          Dengan fokus pada **[Teknologi Utama Anda, misalnya: React, Next.js, dan Tailwind CSS]**, saya selalu bersemangat untuk mempelajari teknologi baru dan menghadapi tantangan kreatif untuk menciptakan pengalaman pengguna yang luar biasa.
+          Saya adalah seorang mahasiswa jurusan Teknik Informatika, yang memiliki kemampuan cukup untuk membangun website yang responsif, interaktif, dan intuitif. Saya memiliki skill yang lumayan memadai untuk mengubah ide menjadi solusi digital yang estetis.
+          {/* Saya seorang **[Profesi Anda, misalnya: Pengembang Web Front-end]** dengan pengalaman dalam membangun aplikasi web yang responsif, intuitif, dan performa tinggi. Saya memiliki passion dalam mengubah ide menjadi solusi digital yang fungsional dan estetis. */}
         </p>
         {/* Tombol ke halaman About yang lebih detail */}
         <Link 
@@ -47,7 +42,7 @@ export default function AboutSection() {
           className={`bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transform hover:scale-105 inline-block ${animationClasses} ${inView ? animatedInClasses : textAnimation}`}
           style={{ transitionDelay: '0.3s' }} // Delay tambahan untuk tombol
         >
-          Pelajari Lebih Lanjut
+          Lihat selengkapnya tentang saya!
         </Link>
       </div>
     </section>

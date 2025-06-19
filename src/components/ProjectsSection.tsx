@@ -28,7 +28,7 @@ export default function ProjectsSection() {
         <h2
           className={`text-4xl font-extrabold mb-12 text-blue-400 ${animationClasses} ${inView ? animatedInClasses : revealAnimation}`}
         >
-          Proyek Unggulan
+          Proyek Unggulan (Sedang dalam Proses pengembangan)
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

@@ -73,7 +73,7 @@ export default function PricingPage() {
             className={`text-5xl font-extrabold mb-4 text-blue-400 ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0s' }}
           >
-            Harga Layanan
+            Harga Layanan (sedang dalam proses pengembangan)
           </h1>
           <p 
             className={`text-xl text-gray-300 ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}

@@ -57,7 +57,7 @@ export default function HeroSection() {
           {/* Menerapkan animasi pulse yang halus pada foto */}
           <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-500 ring-offset-4 ring-offset-black animate-pulse-subtle">
             <Image
-              src="/images/Logoo.png" // Path ke file logo Anda, digunakan sebagai foto profil
+              src="/images/Adet.png" // Path ke file logo Anda, digunakan sebagai foto profil
               alt="Foto Profil ADIT"
               width={500}
               height={500}

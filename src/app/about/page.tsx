@@ -64,7 +64,7 @@ export default function AboutPage() {
             <div className={`flex justify-center ${animationClasses} ${storyInView ? animatedInClasses : revealXLeft}`} style={{ transitionDelay: '0s' }}>
               <div className="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-500 ring-offset-4 ring-offset-black">
                 <Image
-                  src="/images/profile.jpg"
+                  src="/images/Adet.jpg"
                   alt="Foto Profil ADIT"
                   width={500}
                   height={500}
