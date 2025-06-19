@@ -7,28 +7,28 @@ import { useEffect, useRef, useState } from 'react';
  * @param options Opsi Intersection Observer (root, rootMargin, threshold).
  * @returns [ref, isIntersecting] - ref untuk diattach ke elemen, isIntersecting true jika elemen terlihat.
  */
-export function useInView(options?: IntersectionObserverInit) {
-  const ref = useRef<HTMLElement>(null); // Ref untuk elemen yang akan diobservasi
-  const [isIntersecting, setIsIntersecting] = useState(false); // State untuk menyimpan status terlihat atau tidak
+// PERUBAHAN DI SINI: Membuat hook lebih generik dengan <T extends HTMLElement>
+export function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
+  const ref = useRef<T>(null); // Ref untuk elemen yang akan diobservasi, sekarang bertipe T
+  const [isIntersecting, setIsIntersecting] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      // Ketika elemen memasuki atau keluar dari viewport
-      setIsIntersecting(entry.isIntersecting);
-    }, options); // Menerapkan opsi yang diberikan
+    // Pastikan observer hanya dibuat sekali
+    let observer: IntersectionObserver | null = null;
 
     if (ref.current) {
-      // Mulai observasi elemen
+      observer = new IntersectionObserver(([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      }, options);
       observer.observe(ref.current);
     }
 
-    // Cleanup function: hentikan observasi saat komponen di-unmount
     return () => {
-      if (ref.current) {
+      if (observer && ref.current) { // Pastikan observer ada sebelum unobserve
         observer.unobserve(ref.current);
       }
     };
   }, [options]); // Dependensi: opsi observer
 
-  return [ref, isIntersecting] as const; // Mengembalikan ref dan status
+  return [ref, isIntersecting] as const;
 }

@@ -7,7 +7,7 @@ import { useInView } from '@/hooks/useInView'; // Import useInView hook untuk sc
 
 export default function HeroSection() {
   // Hook untuk scroll reveal saat halaman dimuat/digulir
-  const [ref, inView] = useInView({ threshold: 0.1 });
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.1 });
 
   // Kelas untuk animasi scroll reveal
   const animationClasses = 'opacity-0 transform transition-all duration-1000 ease-out';
@@ -59,47 +59,38 @@ export default function HeroSection() {
 
   return (
     <section className="relative flex flex-col items-center justify-center min-h-screen text-center text-white bg-gray-950 p-8 pt-24 md:pt-16 overflow-hidden">
-      {/* Background Effect (opsional) */}
-      <div className="absolute inset-0 z-0 opacity-20">
-        {/* Anda bisa menambahkan pola atau gradasi di sini jika ingin */}
-      </div>
+      <div className="absolute inset-0 z-0 opacity-20"></div>
 
       {/* Konten Utama: Teks dan Foto */}
-      <div className="relative z-10 container mx-auto flex flex-col items-center gap-12 max-w-4xl" ref={ref}> {/* Ref untuk scroll reveal */}
-        {/* Teks "Dit tolongin dit" dengan animasi wave */}
+      {/* ref sekarang sudah benar tipenya */}
+      <div className="relative z-10 container mx-auto flex flex-col items-center gap-12 max-w-4xl" ref={ref}>
         <div 
           className={`flex-1 max-w-2xl text-center ${animationClasses} ${inView ? animatedInClasses : revealY}`} 
-          style={{ transitionDelay: '0.2s' }} // Delay untuk teks setelah HeroSection terlihat
+          style={{ transitionDelay: '0.2s' }}
         >
-          {/* PERUBAHAN DI SINI: Menerapkan onMouseMove dan onMouseLeave */}
           <h1 
-            className="text-6xl sm:text-7xl lg:text-8xl font-extrabold leading-tight mb-8 text-blue-400 animate-pulse-subtle"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ display: 'inline-block', whiteSpace: 'nowrap' }} // Penting untuk layout huruf
+            className="text-6xl sm:text-7xl lg:text-8xl font-extrabold leading-tight mb-8 text-blue-400"
+            style={{ whiteSpace: 'nowrap' }} // Tambahkan kembali white-space: nowrap untuk animasi gelombang
           >
             {characters.map((char, index) => (
               <span
-                key={index} // Menggunakan index sebagai key karena huruf bisa duplikat
-                ref={el => (charRefs.current[index] = el)} // Mengaitkan ref ke setiap span huruf
-                className="inline-block transition-transform duration-100 ease-out" // Transisi untuk smooth scaling
-                style={{ transform: `scale(${getScale(index)})` }} // Menerapkan skala dinamis
+                key={index}
+                className="inline-block animate-wave-text" 
+                style={{ animationDelay: `${index * 0.05}s` }}
               >
-                {char === ' ' ? '\u00A0' : char} {/* Mengganti spasi dengan non-breaking space */}
+                {char === ' ' ? '\u00A0' : char}
               </span>
             ))}
           </h1>
         </div>
 
-        {/* Foto Profil */}
         <div 
           className={`flex justify-center mt-12 md:mt-16 ${animationClasses} ${inView ? animatedInClasses : revealY}`} 
-          style={{ transitionDelay: '0.4s' }} // Delay untuk foto setelah teks muncul
+          style={{ transitionDelay: '0.4s' }}
         >
-          {/* Menambahkan animate-pulse-subtle */}
           <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-500 ring-offset-4 ring-offset-black animate-pulse-subtle">
             <Image
-              src="/images/Adet.png" // Menggunakan Logoo.png sebagai foto profil untuk saat ini
+              src="/images/Logoo.png"
               alt="Foto Profil ADIT"
               width={500}
               height={500}

@@ -13,7 +13,7 @@ export default function AboutPage() {
   const revealXRight = 'translate-x-20'; // Dari 20px ke kanan
 
   // Hooks untuk setiap section
-  const [heroRef, heroInView] = useInView({ threshold: 0.1 });
+  const [heroRef, heroInView] = useInView<HTMLElement>({ threshold: 0.1 });
   const [storyRef, storyInView] = useInView({ threshold: 0.1 });
   const [experienceRef, experienceInView] = useInView({ threshold: 0.1 });
   const [educationRef, educationInView] = useInView({ threshold: 0.1 });

@@ -57,9 +57,9 @@ export default function PricingPage() {
   const revealY = 'translate-y-20'; // Dari 20px ke bawah
 
   // Hooks untuk setiap section
-  const [heroRef, heroInView] = useInView({ threshold: 0.1 });
-  const [plansRef, plansInView] = useInView({ threshold: 0.1 });
-  const [faqRef, faqInView] = useInView({ threshold: 0.1 });
+  const [heroRef, heroInView] = useInView<HTMLElement>({ threshold: 0.1 });
+  const [plansRef, plansInView] = useInView<HTMLElement>({ threshold: 0.1 });
+  const [faqRef, faqInView] = useInView<HTMLElement>({ threshold: 0.1 });
 
 
   return (
