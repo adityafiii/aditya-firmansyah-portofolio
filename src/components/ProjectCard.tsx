@@ -1,6 +1,5 @@
 // src/components/ProjectCard.tsx
 import Image from 'next/image';
-import Link from 'next/link';
 import { Project } from '@/lib/data'; // Import tipe Project
 import React from 'react'; // Import React jika belum ada
 

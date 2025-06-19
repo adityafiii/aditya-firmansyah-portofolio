@@ -2,7 +2,7 @@
 'use client'; // Pastikan ini adalah baris pertama di file ini
 
 import Image from 'next/image';
-import React, { useState, useRef, useEffect } from 'react'; // Tambahkan useRef dan useEffect
+import React, { useState, useRef, } from 'react'; // Tambahkan useRef dan useEffect
 import { useInView } from '@/hooks/useInView'; // Import useInView hook untuk scroll reveal awal
 
 export default function HeroSection() {
