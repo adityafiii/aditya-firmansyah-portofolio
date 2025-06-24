@@ -11,6 +11,7 @@ export type Project = {
   liveDemoUrl?: string; // Opsional
 };
 
+// Data proyek unggulan yang akan ditampilkan di halaman beranda
 export const featuredProjects: Project[] = [
   {
     id: 'project-1',
@@ -39,14 +40,5 @@ export const featuredProjects: Project[] = [
     githubUrl: 'https://github.com/adit-dev/designer-portfolio',
     liveDemoUrl: 'https://designer-portfolio-demo.vercel.app',
   },
-  // Anda bisa menambahkan proyek lain di sini
-  // {
-  //   id: 'project-4',
-  //   title: 'Aplikasi Cuaca Real-time',
-  //   description: 'Menampilkan informasi cuaca terkini berdasarkan lokasi pengguna.',
-  //   imageUrl: '/images/project4.png',
-  //   technologies: ['React', 'API Cuaca'],
-  //   githubUrl: 'https://github.com/adit-dev/weather-app',
-  //   liveDemoUrl: 'https://weather-app-demo.vercel.app',
-  // },
+  // Tambahkan proyek unggulan lain di sini jika Anda ingin lebih dari 3 di beranda
 ];
