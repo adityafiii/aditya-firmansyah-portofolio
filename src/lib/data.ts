@@ -1,44 +1,56 @@
 // src/lib/data.ts
 
-// Definisi tipe untuk proyek Anda
+// Definisi tipe untuk struktur data proyek Anda.
+// Ini membantu TypeScript memahami bentuk objek proyek.
 export type Project = {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string; // Path ke gambar proyek di folder public
-  technologies: string[];
-  githubUrl?: string; // Opsional
-  liveDemoUrl?: string; // Opsional
+  id: string; // ID unik untuk setiap proyek
+  title: string; // Judul proyek
+  description: string; // Deskripsi singkat proyek
+  imageUrl: string; // Path ke gambar/screenshot proyek (biasanya dari folder public/)
+  technologies: string[]; // Daftar teknologi yang digunakan (array of strings)
+  githubUrl?: string; // URL opsional ke repositori GitHub
+  liveDemoUrl?: string; // URL opsional ke demo live proyek
 };
 
-// Data proyek unggulan yang akan ditampilkan di halaman beranda
+// Array yang berisi proyek-proyek unggulan Anda.
+// Saat ini hanya berisi satu entri untuk website portfolio ini sendiri.
 export const featuredProjects: Project[] = [
   {
-    id: 'project-1',
-    title: 'Website E-commerce Modern',
-    description: 'Platform belanja online dengan fitur keranjang, checkout, dan manajemen produk.',
-    imageUrl: '/images/project1.png', // Ganti dengan path gambar proyek Anda
-    technologies: ['Next.js', 'Tailwind CSS', 'Stripe', 'MongoDB'],
-    githubUrl: 'https://github.com/adit-dev/ecommerce-app', // Ganti dengan link repo Anda
-    liveDemoUrl: 'https://ecommerce-demo.vercel.app', // Ganti dengan link demo Anda
+    id: 'my-personal-portfolio-website 1', // ID unik untuk proyek ini
+    title: 'Website Portofolio Pribadi', // Judul proyek
+    description: 'Website portofolio modern dan responsif yang dibangun untuk menampilkan proyek dan keahlian saya. Dilengkapi dengan panel admin untuk manajemen konten.', // Deskripsi proyek
+    imageUrl: '/images/Proyek2.png', // <-- GANTI DENGAN PATH KE SCREENSHOT WEBSITE ANDA DI public/images/
+    technologies: ['Next.js', 'React.js', 'Tailwind CSS', 'Firebase (Firestore, Auth)'], // Teknologi yang digunakan
+    githubUrl: 'https://github.com/adityafiii/aditya-firmansyah-portofolio', // <-- GANTI DENGAN URL REPO GITHUB ANDA
+    liveDemoUrl: 'https://aditya-firmansyah-portofolio.vercel.app', // <-- GANTI DENGAN URL LIVE WEBSITE ANDA DI VERCEL
   },
   {
-    id: 'project-2',
-    title: 'Aplikasi Manajemen Tugas',
-    description: 'Aplikasi sederhana untuk mengatur dan melacak tugas harian dengan antarmuka yang bersih.',
-    imageUrl: '/images/project2.png', // Ganti dengan path gambar proyek Anda
-    technologies: ['React', 'Node.js', 'Express', 'PostgreSQL'],
-    githubUrl: 'https://github.com/adit-dev/task-manager',
-    liveDemoUrl: 'https://task-manager-demo.netlify.app',
+    id: 'my-personal-portfolio-website 2', // ID unik untuk proyek ini
+    title: 'Website Portofolio Pribadi', // Judul proyek
+    description: 'Website portofolio modern dan responsif yang dibangun untuk menampilkan proyek dan keahlian saya. Dilengkapi dengan panel admin untuk manajemen konten.', // Deskripsi proyek
+    imageUrl: '/images/Proyek2.png', // <-- GANTI DENGAN PATH KE SCREENSHOT WEBSITE ANDA DI public/images/
+    technologies: ['Next.js', 'React.js', 'Tailwind CSS', 'Firebase (Firestore, Auth)'], // Teknologi yang digunakan
+    githubUrl: 'https://github.com/adityafiii/aditya-firmansyah-portofolio', // <-- GANTI DENGAN URL REPO GITHUB ANDA
+    liveDemoUrl: 'https://aditya-firmansyah-portofolio.vercel.app', // <-- GANTI DENGAN URL LIVE WEBSITE ANDA DI VERCEL
   },
   {
-    id: 'project-3',
-    title: 'Landing Page Portofolio Desainer',
-    description: 'Desain landing page yang menarik dan responsif untuk portofolio seorang desainer grafis.',
-    imageUrl: '/images/project3.png', // Ganti dengan path gambar proyek Anda
-    technologies: ['HTML5', 'CSS3', 'JavaScript', 'GSAP'],
-    githubUrl: 'https://github.com/adit-dev/designer-portfolio',
-    liveDemoUrl: 'https://designer-portfolio-demo.vercel.app',
+    id: 'my-personal-portfolio-website 3', // ID unik untuk proyek ini
+    title: 'Website Portofolio Pribadi', // Judul proyek
+    description: 'Website portofolio modern dan responsif yang dibangun untuk menampilkan proyek dan keahlian saya. Dilengkapi dengan panel admin untuk manajemen konten.', // Deskripsi proyek
+    imageUrl: '/images/Proyek2.png', // <-- GANTI DENGAN PATH KE SCREENSHOT WEBSITE ANDA DI public/images/
+    technologies: ['Next.js', 'React.js', 'Tailwind CSS', 'Firebase (Firestore, Auth)'], // Teknologi yang digunakan
+    githubUrl: 'https://github.com/adityafiii/aditya-firmansyah-portofolio', // <-- GANTI DENGAN URL REPO GITHUB ANDA
+    liveDemoUrl: 'https://aditya-firmansyah-portofolio.vercel.app', // <-- GANTI DENGAN URL LIVE WEBSITE ANDA DI VERCEL
   },
-  // Tambahkan proyek unggulan lain di sini jika Anda ingin lebih dari 3 di beranda
+  // Jika Anda ingin menambahkan proyek lain di masa mendatang, tambahkan di sini.
+  // Contoh:
+  // {
+  //   id: 'ecommerce-store-example',
+  //   title: 'Contoh Toko Online',
+  //   description: 'Situs e-commerce fiktif dengan fitur keranjang belanja dan checkout.',
+  //   imageUrl: '/images/ecommerce.png',
+  //   technologies: ['Next.js', 'Stripe', 'MongoDB'],
+  //   githubUrl: 'https://github.com/adit/ecommerce',
+  //   liveDemoUrl: 'https://ecommerce.vercel.app',
+  // },
 ];

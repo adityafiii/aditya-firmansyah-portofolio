@@ -35,9 +35,9 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen pt-16 bg-gray-900 text-white flex items-center justify-center">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-xl max-w-md w-full">
-        <h1 className="text-3xl font-bold text-center mb-6 text-blue-400">Admin Login</h1>
+    <main className="min-h-screen pt-16 bg-yellow-50 text-white flex items-center justify-center">
+      <div className="bg-[#2d2926] p-8 rounded-lg shadow-xl max-w-md w-full">
+        <h1 className="text-4xl font-bold text-center mb-6 text-white">Admin Login</h1>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-gray-300 text-sm font-bold mb-2">Email</label>
@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
           {error && <p className="text-red-400 text-sm text-center">{error}</p>}
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full w-full transition-colors"
+            className="bg-yellow-50 hover:bg-orange-500 text-black hover:text-black font-semibold py-2 px-4 rounded-full w-full transition-colors"
             disabled={loading}
           >
             {loading ? 'Logging In...' : 'Login'}

@@ -26,43 +26,50 @@ export default function AboutPage() {
   //   return `typing ${duration}s steps(${steps}, end) forwards, blink-caret .75s step-end infinite ${delay}s`;
   // };
 
-  const paragraph1 = `Halo! Saya ADIT, seorang **[Profesi Anda, misal: Pengembang Web Front-end]** yang berdedikasi dengan pengalaman dalam membangun aplikasi web yang modern dan efisien. Perjalanan saya di dunia teknologi dimulai sejak [tahun/usia Anda mulai tertarik], didorong oleh rasa ingin tahu yang tak ada habisnya tentang bagaimana teknologi dapat memecahkan masalah nyata dan menciptakan pengalaman pengguna yang luar biasa.`;
-  const paragraph2 = `Saya memiliki keahlian mendalam dalam menggunakan teknologi seperti **React.js, Next.js, dan Tailwind CSS** untuk menciptakan antarmuka pengguna yang responsif, intuitif, dan menarik. Saya juga akrab dengan [sebutkan teknologi backend/database lain jika relevan, misal: Node.js, Express, MongoDB] yang memungkinkan saya untuk memahami dan berkontribusi pada seluruh stack pengembangan.`;
+  const paragraph1 = `Halo! Saya ADITYA, Seorang Mahasiswa yang berdedikasi dengan pengalaman dalam membangun aplikasi web yang modern dan efisien. Perjalanan saya di dunia teknologi dimulai sejak 2025, didorong oleh rasa ingin tahu yang tak ada habisnya tentang bagaimana teknologi dapat memecahkan masalah nyata dan menciptakan pengalaman pengguna yang luar biasa.`;
+  const paragraph2 = `Saya memiliki keahlian mendalam dalam menggunakan teknologi seperti React.js, Next.js, dan Tailwind CSS untuk menciptakan antarmuka pengguna yang responsif, intuitif, dan menarik. Saya juga akrab dengan Firebase, Github, Figma, dll yang memungkinkan saya untuk dapat lebih mudah membangun sebuah website yang terstruktur.`;
   const paragraph3 = `Saya percaya bahwa kunci dari sebuah proyek yang sukses adalah kombinasi dari kode yang bersih, desain yang baik, dan komunikasi yang efektif. Saya selalu siap untuk mempelajari hal baru dan menghadapi tantangan kompleks, dengan tujuan akhir menghasilkan solusi yang inovatif dan memberikan nilai nyata.`;
 
   // Pastikan 'return' dan '(' dan '<main>' berada di baris yang sama
-  return (<main className="min-h-screen pt-16 bg-gray-900 text-white overflow-hidden"> {/* overflow-hidden di main */}
+  return (<main className="min-h-screen pt-16 bg-yellow-50 text-white overflow-hidden"> {/* overflow-hidden di main */}
       {/* Bagian Hero untuk Halaman About */}
       <section 
         ref={heroRef} 
-        className="py-20 bg-gray-950 text-center"
+        className="py-20 bg-yellow-50 text-center"
       >
         <div className="container mx-auto px-8">
           <h1 
-            className={`text-5xl font-extrabold mb-4 text-blue-400 ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
+            className={`text-5xl font-extrabold mb-4 text-black ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0s' }}
           >
             Tentang Saya
           </h1>
           <p 
-            className={`text-xl text-gray-300 ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
+            className={`text-xl text-black ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0.1s' }}
           >
-            Mengenal Lebih Dekat Perjalanan dan Keahlian Saya
+            Mengenal Lebih Detail Tentang Diri Saya
           </p>
+          <a
+            href="/articles"
+            className={`inline-block mt-6 bg-[#2d2926] hover:bg-orange-500 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-all duration-300 text-lg ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
+            style={{ transitionDelay: '0.1s' }}
+          >
+            Artikel Saya
+          </a>
         </div>
       </section>
 
       {/* Bagian Cerita/Narasi Utama */}
       <section 
         ref={storyRef}
-        className="py-16 px-8 bg-gray-900"
+        className="py-16 px-8 bg-white"
       >
         <div className="container mx-auto max-w-5xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* Foto Profil */}
             <div className={`flex justify-center ${animationClasses} ${storyInView ? animatedInClasses : revealXLeft}`} style={{ transitionDelay: '0s' }}>
-              <div className="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-500 ring-offset-4 ring-offset-black">
+              <div className="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl ring-4 ring-black ring-offset-4 ring-offset-black">
                 <Image
                   src="/images/Adet.jpg"
                   alt="Foto Profil ADIT"
@@ -75,7 +82,7 @@ export default function AboutPage() {
             </div>
 
             {/* Teks Cerita (tanpa animasi mengetik, kembali ke animasi reveal biasa) */}
-            <div className={`text-lg leading-relaxed text-gray-300 ${animationClasses} ${storyInView ? animatedInClasses : revealXRight}`} style={{ transitionDelay: '0.1s' }}>
+            <div className={`text-lg leading-relaxed text-black ${animationClasses} ${storyInView ? animatedInClasses : revealXRight}`} style={{ transitionDelay: '0.1s' }}>
               <p className="mb-6">
                 {/* Hapus span dan style animasi mengetik jika tidak dipakai */}
                 {paragraph1}
@@ -94,36 +101,24 @@ export default function AboutPage() {
       {/* Bagian Pengalaman (Opsional) */}
       <section 
         ref={experienceRef}
-        className="py-16 px-8 bg-gray-800"
+        className="py-16 px-8 bg-yellow-50"
       >
         <div className="container mx-auto max-w-4xl">
           <h2 
-            className={`text-4xl font-extrabold mb-10 text-blue-400 text-center ${animationClasses} ${experienceInView ? animatedInClasses : revealY}`}
+            className={`text-6xl font-extrabold mb-10 text-black text-center ${animationClasses} ${experienceInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0s' }}
           >
             Pengalaman
           </h2>
-          <div className="space-y-8">
+          <div className="space-y-8 text-center">
             <div 
               className={`${animationClasses} ${experienceInView ? animatedInClasses : revealY}`} 
               style={{ transitionDelay: '0.1s' }}
             >
-              <h3 className="text-2xl font-bold text-white">[Nama Jabatan/Posisi]</h3>
-              <p className="text-blue-300 text-lg">[Nama Perusahaan/Organisasi] | [Kota, Negara] | [Tanggal Mulai] - [Tanggal Selesai]</p>
-              <ul className="list-disc list-inside text-gray-300 mt-2 space-y-1">
-                <li>Deskripsi tanggung jawab atau pencapaian utama 1.</li>
-                <li>Deskripsi tanggung jawab atau pencapaian utama 2.</li>
-              </ul>
-            </div>
-            <div 
-              className={`${animationClasses} ${experienceInView ? animatedInClasses : revealY}`} 
-              style={{ transitionDelay: '0.2s' }}
-            >
-              <h3 className="text-2xl font-bold text-white">[Nama Jabatan/Posisi]</h3>
-              <p className="text-blue-300 text-lg">[Nama Perusahaan/Organisasi] | [Kota, Negara] | [Tanggal Mulai] - [Tanggal Selesai]</p>
-              <ul className="list-disc list-inside text-gray-300 mt-2 space-y-1">
-                <li>Deskripsi tanggung jawab atau pencapaian utama 1.</li>
-                <li>Deskripsi tanggung jawab atau pencapaian utama 2.</li>
+              <h3 className="text-2xl font-bold text-black">Magang</h3>
+              <p className="text-black text-lg">PT. Telkom Indonesia | Tanjungpinang, Indonesia</p>
+              <ul className="list-disc list-inside text-black mt-2 space-y-1 inline-block text-left">
+                <li>Berfokus Untuk Melakukan Pemasangan dan Konfigurasi Jaringan Wireless</li>
               </ul>
             </div>
             {/* Tambahkan lebih banyak pengalaman jika ada */}
@@ -134,23 +129,22 @@ export default function AboutPage() {
       {/* Bagian Pendidikan (Opsional) */}
       <section 
         ref={educationRef}
-        className="py-16 px-8 bg-gray-900"
+        className="py-16 px-8 bg-white"
       >
         <div className="container mx-auto max-w-4xl">
           <h2 
-            className={`text-4xl font-extrabold mb-10 text-blue-400 text-center ${animationClasses} ${educationInView ? animatedInClasses : revealY}`}
+            className={`text-6xl font-extrabold mb-10 text-black text-center ${animationClasses} ${educationInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0s' }}
           >
-            Pendidikan
+            Pendidikan Terakhir
           </h2>
-          <div className="space-y-8">
+          <div className="space-y-8 text-center">
             <div 
               className={`${animationClasses} ${educationInView ? animatedInClasses : revealY}`} 
               style={{ transitionDelay: '0.1s' }}
             >
-              <h3 className="text-2xl font-bold text-white">[Nama Gelar/Jurusan]</h3>
-              <p className="text-blue-300 text-lg">[Nama Universitas/Institusi] | [Tahun Lulus]</p>
-              <p className="text-gray-300 mt-2">Fokus pada [bidang studi terkait] dan proyek-proyek [sebutkan proyek terkait].</p>
+              <h3 className="text-2xl font-bold text-black">Teknik Komputer dan Jaringan (TKJ)</h3>
+              <p className="text-black text-lg">SMK Negeri 4 Tanjungpinang | 2019 - 2022</p>
             </div>
             {/* Tambahkan lebih banyak pendidikan jika ada */}
           </div>
@@ -160,18 +154,18 @@ export default function AboutPage() {
       {/* Call to Action ke Halaman Kontak */}
       <section 
         ref={contactCTARef}
-        className="py-16 px-8 bg-gray-800 text-center"
+        className="py-16 px-8 bg-yellow-50 text-center"
       >
         <div className="container mx-auto">
           <h2 
-            className={`text-4xl font-bold mb-6 text-white ${animationClasses} ${contactCTAInView ? animatedInClasses : revealY}`}
+            className={`text-4xl font-bold mb-6 text-black ${animationClasses} ${contactCTAInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0s' }}
           >
             Tertarik untuk Bekerja Sama?
           </h2>
           <Link
             href="/contact"
-            className={`bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 inline-block ${animationClasses} ${contactCTAInView ? animatedInClasses : revealY}`}
+            className={`bg-[#2d2926] hover:bg-orange-500 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 inline-block ${animationClasses} ${contactCTAInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0.1s' }}
           >
             Hubungi Saya

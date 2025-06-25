@@ -10,14 +10,10 @@ const skills = [
   { name: 'Next.js', category: 'Framework React' },
   { name: 'Tailwind CSS', category: 'Styling' },
   { name: 'Git & GitHub', category: 'Version Control' },
-  { name: 'Responsif Design', category: 'Konsep' },
+  { name: 'Web Design', category: 'Desain' },
   { name: 'UI/UX Principles', category: 'Desain' },
   { name: 'Figma', category: 'Tools Desain' },
-  { name: 'AI', category: 'Source of Idea' },
-  { name: 'Photography', category: 'Art' },
-  { name: 'Guitar', category: 'Music' },
-  { name: 'Video Editor', category: 'Design' },
-  { name: 'Microsoft Office', category: 'Document' },
+  { name: 'Firebase', category: 'Database' },
   
   // Tambahkan skill Anda yang lain di sini
 ];
@@ -38,11 +34,11 @@ export default function SkillsSection() {
   return (<section 
       id="skills" 
       ref={ref} // Attach ref ke elemen section
-      className="py-20 px-8 bg-gray-900 text-white flex flex-col items-center overflow-hidden" // overflow-hidden untuk mencegah scrollbar saat animasi
+      className="py-20 px-8 bg-white text-white flex flex-col items-center overflow-hidden" // overflow-hidden untuk mencegah scrollbar saat animasi
     >
       <div className="container mx-auto text-center max-w-5xl">
         <h2 
-          className={`text-4xl font-extrabold mb-12 text-blue-400 ${animationClasses} ${inView ? animatedInClasses : revealAnimation}`}
+          className={`text-6xl font-extrabold mb-12 text-black ${animationClasses} ${inView ? animatedInClasses : revealAnimation}`}
         >
           Keahlian Saya
         </h2>
@@ -52,13 +48,13 @@ export default function SkillsSection() {
             <div
               key={skill.name}
               className={`
-                bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 
+                bg-[#2d2926] p-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 
                 transition-all duration-300 ${animationClasses} ${inView ? animatedInClasses : revealAnimation}
               `}
               // Delay animasi berurutan untuk setiap kartu skill
               style={{ transitionDelay: `${0.1 * index}s` }} 
             >
-              <h3 className="text-xl font-semibold mb-2 text-white">{skill.name}</h3>
+              <h3 className="text-xl font-semibold md:text-3xl mb-2 text-white">{skill.name}</h3>
               <p className="text-gray-400 text-sm">{skill.category}</p>
               {/* Anda bisa menambahkan ikon di sini nanti jika ingin visual */}
             </div>

@@ -1,130 +1,223 @@
-// src/app/admin/dashboard/page.tsx
-'use client'; // This is a Client Component because it uses client-side interactions (useState, useEffect)
+'use client';
 
 import React, { useEffect, useState } from 'react';
-import { auth, db } from '@/lib/firebase'; // Import auth and db objects from Firebase configuration
-import { onAuthStateChanged, signOut } from 'firebase/auth'; // Firebase functions for auth state and logout
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore'; // Firestore functions for CRUD
-import { useRouter } from 'next/navigation'; // Next.js hook for client-side navigation
+import { auth, db } from '@/lib/firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
 
 export default function AdminDashboardPage() {
-  const [user, setUser] = useState<any>(null); // State to store the currently logged-in user
-  const [loading, setLoading] = useState(true); // State for initial loading (auth check, data fetch)
-  const [projects, setProjects] = useState<any[]>([]); // State to store portfolio projects from Firestore
-  const [newProject, setNewProject] = useState({ title: '', description: '', imageUrl: '', technologies: '' }); // State for new project form
-  const [editingProject, setEditingProject] = useState<any>(null); // State for the project being edited (null if not editing)
-  const router = useRouter(); // Initialize Next.js router
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  // Effect to listen for authentication state changes
+  const [activeTab, setActiveTab] = useState<'projects' | 'articles' | 'messages'>('projects');
+
+  // States untuk Proyek
+  const [projects, setProjects] = useState<any[]>([]);
+  const [newProject, setNewProject] = useState({ title: '', description: '', imageUrl: '', technologies: '' });
+  const [editingProject, setEditingProject] = useState<any>(null);
+
+  // States untuk Artikel
+  const [articles, setArticles] = useState<any[]>([]);
+  const [newArticle, setNewArticle] = useState({ title: '', content: '', author: '', date: '' });
+  const [editingArticle, setEditingArticle] = useState<any>(null);
+
+  // States untuk Pesan
+  const [messages, setMessages] = useState<any[]>([]);
+  const [loadingMessages, setLoadingMessages] = useState(true);
+
+  // Effect untuk autentikasi dan load data
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) {
-        // If no user is logged in, redirect to the admin login page
         router.push('/admin/login');
       } else {
-        setUser(currentUser); // Set the logged-in user
-        fetchProjects(); // Fetch projects data once user is authenticated
+        setUser(currentUser);
+        Promise.all([fetchProjects(), fetchArticles(), fetchMessages()]).finally(() => setLoading(false));
       }
-      setLoading(false); // End initial loading
     });
-    return () => unsubscribe(); // Clean up the auth state listener when component unmounts
-  }, [router]); // Re-run effect if router object changes (though it usually won't)
+    return () => unsubscribe();
+  }, [router]);
 
-  // Function to fetch project data from Firestore
+  // --- PROJECTS ---
   const fetchProjects = async () => {
-    setLoading(true);
     try {
-      // Get all documents from the "projects" collection
-      // IMPORTANT: Adjust the collection path "projects" if you use a different name
-      const querySnapshot = await getDocs(collection(db, "projects")); 
-      const projectsData = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() })); // Map documents to array of objects
-      setProjects(projectsData); // Update projects state
+      const q = query(collection(db, "projects"), orderBy("title"));
+      const querySnapshot = await getDocs(q);
+      const projectsData = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      setProjects(projectsData);
     } catch (error) {
       console.error("Error fetching projects: ", error);
-    } finally {
-      setLoading(false);
     }
   };
 
-  // Handler to add a new project
+  const formatImageUrlForDb = (url: string) => {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('/')) {
+      return url;
+    }
+    return `/images/${url}`;
+  };
+
   const addProject = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Add a new document to the "projects" collection
+      const imageUrlToSave = formatImageUrlForDb(newProject.imageUrl);
       const docRef = await addDoc(collection(db, "projects"), {
         ...newProject,
-        // Convert technologies string (comma-separated) to an array
+        imageUrl: imageUrlToSave,
         technologies: newProject.technologies.split(',').map(tech => tech.trim()),
       });
-      console.log("Project added with ID: ", docRef.id);
-      setNewProject({ title: '', description: '', imageUrl: '', technologies: '' }); // Reset form fields
-      fetchProjects(); // Refresh the project list
+      setNewProject({ title: '', description: '', imageUrl: '', technologies: '' });
+      fetchProjects();
     } catch (error) {
       console.error("Error adding project: ", error);
     }
   };
 
-  // Handler to start editing an existing project
-  const startEdit = (project: any) => {
-    // Set the editingProject state with the selected project's data
-    // Convert technologies array back to a comma-separated string for the form field
-    setEditingProject({ ...project, technologies: project.technologies.join(',') });
-  };
-
-  // Handler to update an existing project
   const updateProject = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingProject?.id) return; // Ensure there's a project ID to update
+    if (!editingProject?.id) return;
     try {
-      // Get a reference to the specific project document
+      const imageUrlToSave = formatImageUrlForDb(editingProject.imageUrl);
       const projectRef = doc(db, "projects", editingProject.id);
-      // Update the document with new data
       await updateDoc(projectRef, {
         title: editingProject.title,
         description: editingProject.description,
-        imageUrl: editingProject.imageUrl,
+        imageUrl: imageUrlToSave,
         technologies: editingProject.technologies.split(',').map((tech: string) => tech.trim()),
       });
-      console.log("Project updated!");
-      setEditingProject(null); // Exit editing mode
-      fetchProjects(); // Refresh the project list
+      setEditingProject(null);
+      fetchProjects();
     } catch (error) {
       console.error("Error updating project: ", error);
     }
   };
 
-  // Handler to delete a project
+  const startEdit = (project: any) => {
+    let displayImageUrl = project.imageUrl;
+    if (project.imageUrl && project.imageUrl.startsWith('/images/')) {
+      displayImageUrl = project.imageUrl.substring('/images/'.length);
+    }
+    setEditingProject({
+      ...project,
+      technologies: project.technologies.join(','),
+      imageUrl: displayImageUrl
+    });
+  };
+
   const deleteProject = async (id: string) => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus proyek ini?")) { // Confirmation dialog
-      try {
-        // Delete the specific project document
-        await deleteDoc(doc(db, "projects", id));
-        console.log("Project deleted!");
-        fetchProjects(); // Refresh the project list
-      } catch (error) {
-        console.error("Error deleting project: ", error);
-      }
+    const yakin = window.confirm("Apakah Anda yakin ingin menghapus proyek ini?");
+    if (!yakin) return;
+    try {
+      await deleteDoc(doc(db, "projects", id));
+      setProjects(projects.filter((project) => project.id !== id));
+    } catch (error) {
+      console.error("Error deleting project: ", error);
     }
   };
 
-  // Handler for user logout
-  const handleLogout = async () => {
-    await signOut(auth); // Sign out the current user
-    router.push('/admin/login'); // Redirect to login page
+  // --- ARTICLES ---
+  const fetchArticles = async () => {
+    try {
+      const q = query(collection(db, "articles"), orderBy("date", "desc"));
+      const querySnapshot = await getDocs(q);
+      const articlesData = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      setArticles(articlesData);
+    } catch (error) {
+      console.error("Error fetching articles: ", error);
+    }
   };
 
-  // Display loading state while authentication status and data are being fetched
+  const addArticle = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await addDoc(collection(db, "articles"), {
+        ...newArticle,
+        author: newArticle.author || user?.email || 'Admin',
+        date: newArticle.date || new Date().toISOString().split('T')[0],
+      });
+      setNewArticle({ title: '', content: '', author: '', date: '' });
+      fetchArticles();
+    } catch (error) {
+      console.error("Error adding article: ", error);
+    }
+  };
+
+  const startEditArticle = (article: any) => {
+    setEditingArticle(article);
+  };
+query
+  const updateArticle = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingArticle?.id) return;
+    try {
+      const articleRef = doc(db, "articles", editingArticle.id);
+      await updateDoc(articleRef, {
+        title: editingArticle.title,
+        content: editingArticle.content,
+        author: editingArticle.author,
+        date: editingArticle.date,
+      });
+      setEditingArticle(null);
+      fetchArticles();
+    } catch (error) {
+      console.error("Error updating article: ", error);
+    }
+  };
+
+  const deleteArticle = async (id: string) => {
+    const yakin = window.confirm("Apakah Anda yakin ingin menghapus artikel ini?");
+    if (!yakin) return;
+    try {
+      await deleteDoc(doc(db, "articles", id));
+      setArticles(articles.filter((article) => article.id !== id));
+    } catch (error) {
+      console.error("Error deleting article: ", error);
+    }
+  };
+
+// --- MESSAGES ---
+const fetchMessages = async () => {
+  setLoadingMessages(true);
+  try {
+    const q = collection(db, "messages"); // tanpa orderBy agar aman jika ada data tanpa timestamp
+    const querySnapshot = await getDocs(q);
+    const messagesData = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    setMessages(messagesData);
+  } catch (error) {
+    console.error("Error fetching messages: ", error);
+  }
+  setLoadingMessages(false);
+};
+
+  const deleteMessage = async (id: string) => {
+    const yakin = window.confirm("Apakah Anda yakin ingin menghapus pesan ini?");
+    if (!yakin) return;
+    try {
+      await deleteDoc(doc(db, "messages", id));
+      setMessages(messages.filter((msg) => msg.id !== id));
+    } catch (error) {
+      console.error("Error deleting message: ", error);
+    }
+  };
+messages.length
+  // --- LOGOUT ---
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.push('/admin/login');
+  };
+
   if (loading) {
-    return <main className="min-h-screen pt-16 bg-gray-900 text-white flex items-center justify-center">Loading Admin Dashboard...</main>;
+    return <main className="min-h-screen pt-16 bg-yellow-50 text-black flex items-center justify-center">Loading Admin Dashboard...</main>;
   }
 
-  // Main dashboard UI
   return (
-    <main className="min-h-screen pt-16 bg-gray-900 text-white p-8">
+    <main className="min-h-screen pt-16 bg-yellow-50 text-white p-8">
       <div className="container mx-auto">
-        <h1 className="text-4xl font-bold text-blue-400 mb-8">Admin Dashboard</h1>
-        {/* Display logged-in user's email */}
-        <p className="text-gray-300 mb-4">Selamat datang, {user?.email}!</p>
+        <h1 className="text-4xl font-bold text-black text-center mb-8">Admin Dashboard</h1>
+        <p className="text-black text-center mb-4">Selamat datang, {user?.email}!</p>
         <button
           onClick={handleLogout}
           className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-full mb-8 transition-colors"
@@ -132,93 +225,282 @@ export default function AdminDashboardPage() {
           Logout
         </button>
 
-        {/* Form to Add/Edit Projects */}
-        <div className="bg-gray-800 p-6 rounded-lg shadow-xl mb-8">
-          <h2 className="text-2xl font-bold mb-4 text-white">
-            {editingProject ? 'Edit Proyek' : 'Tambah Proyek Baru'}
-          </h2>
-          <form onSubmit={editingProject ? updateProject : addProject} className="space-y-4">
-            <input
-              type="text"
-              placeholder="Judul Proyek"
-              value={editingProject ? editingProject.title : newProject.title}
-              onChange={(e) => editingProject ? setEditingProject({ ...editingProject, title: e.target.value }) : setNewProject({ ...newProject, title: e.target.value })}
-              className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white placeholder-gray-400"
-              required
-            />
-            <textarea
-              placeholder="Deskripsi Proyek"
-              value={editingProject ? editingProject.description : newProject.description}
-              onChange={(e) => editingProject ? setEditingProject({ ...editingProject, description: e.target.value }) : setNewProject({ ...newProject, description: e.target.value })}
-              className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white placeholder-gray-400 h-24 resize-y"
-              required
-            ></textarea>
-            <input
-              type="text"
-              placeholder="URL Gambar (misal: /images/project1.png)"
-              value={editingProject ? editingProject.imageUrl : newProject.imageUrl}
-              onChange={(e) => editingProject ? setEditingProject({ ...editingProject, imageUrl: e.target.value }) : setNewProject({ ...newProject, imageUrl: e.target.value })}
-              className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white placeholder-gray-400"
-              required
-            />
-            <input
-              type="text"
-              placeholder="Teknologi (dipisahkan koma, misal: React, Next.js, Tailwind CSS)"
-              value={editingProject ? editingProject.technologies : newProject.technologies}
-              onChange={(e) => editingProject ? setEditingProject({ ...editingProject, technologies: e.target.value }) : setNewProject({ ...newProject, technologies: e.target.value })}
-              className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white placeholder-gray-400"
-            />
-            <div className="flex space-x-4">
-              <button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full flex-grow transition-colors"
-              >
-                {editingProject ? 'Update Proyek' : 'Tambah Proyek'}
-              </button>
-              {editingProject && (
-                <button
-                  type="button"
-                  onClick={() => setEditingProject(null)}
-                  className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-full transition-colors"
-                >
-                  Batal
-                </button>
-              )}
-            </div>
-          </form>
+        {/* Tab Navigation */}
+        <div className="mb-8 border-b border-black">
+          <nav className="-mb-px flex space-x-8">
+            <button
+              onClick={() => setActiveTab('projects')}
+              className={`
+                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg
+                ${activeTab === 'projects'
+                  ? 'border-black text-black'
+                  : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-300'}
+                transition-colors duration-200
+              `}
+            >
+              Kelola Proyek
+            </button>
+            <button
+              onClick={() => setActiveTab('articles')}
+              className={`
+                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg
+                ${activeTab === 'articles'
+                  ? 'border-black text-black'
+                  : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-300'}
+                transition-colors duration-200
+              `}
+            >
+              Kelola Artikel
+            </button>
+            <button
+              onClick={() => setActiveTab('messages')}
+              className={`
+                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg
+                ${activeTab === 'messages'
+                  ? 'border-black text-black'
+                  : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-300'}
+                transition-colors duration-200
+              `}
+            >
+              Kelola Pesan
+            </button>
+          </nav>
         </div>
 
-        {/* List of Projects */}
-        <h2 className="text-2xl font-bold mb-4 text-white">Daftar Proyek Anda</h2>
-        {projects.length === 0 ? (
-          <p className="text-gray-400">Tidak ada proyek.</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
-              <div key={project.id} className="bg-gray-800 p-4 rounded-lg shadow-md flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-white">{project.title}</h3>
-                  <p className="text-gray-300 text-sm mt-1">{project.description}</p>
-                  <p className="text-gray-400 text-xs mt-2">Tech: {project.technologies?.join(', ')}</p>
-                </div>
-                <div className="mt-4 flex space-x-2">
+        {/* Konten Proyek */}
+        {activeTab === 'projects' && (
+          <div>
+            {/* Form Tambah/Edit Proyek */}
+            <div className="bg-[#2d2926] p-6 rounded-lg shadow-xl mb-8">
+              <h2 className="text-4xl font-bold mb-4 text-white">
+                {editingProject ? 'Edit Proyek' : 'Tambah Proyek Baru'}
+              </h2>
+              <form onSubmit={editingProject ? updateProject : addProject} className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Judul Proyek"
+                  value={editingProject ? editingProject.title : newProject.title}
+                  onChange={(e) => editingProject ? setEditingProject({ ...editingProject, title: e.target.value }) : setNewProject({ ...newProject, title: e.target.value })}
+                  className="w-full p-2 rounded bg-yellow-50 border border-gray-600 text-black placeholder-gray-400"
+                  required
+                />
+                <textarea
+                  placeholder="Deskripsi Proyek"
+                  value={editingProject ? editingProject.description : newProject.description}
+                  onChange={(e) => editingProject ? setEditingProject({ ...editingProject, description: e.target.value }) : setNewProject({ ...newProject, description: e.target.value })}
+                  className="w-full p-2 rounded bg-yellow-50 border border-gray-600 text-black placeholder-gray-400 h-24 resize-y"
+                  required
+                ></textarea>
+                <label className="block text-white text-sm font-bold mb-2">Nama File Gambar (misal: project1.png)</label>
+                <input
+                  type="text"
+                  placeholder="NamaFile.ekstensi (ex: project1.png)"
+                  value={editingProject ? editingProject.imageUrl : newProject.imageUrl}
+                  onChange={(e) => {
+                    if (editingProject) {
+                      setEditingProject({ ...editingProject, imageUrl: e.target.value });
+                    } else {
+                      setNewProject({ ...newProject, imageUrl: e.target.value });
+                    }
+                  }}
+                  className="w-full p-2 rounded bg-yellow-50 border border-gray-600 text-black placeholder-gray-400"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Teknologi (dipisahkan koma, misal: React, Next.js, Tailwind CSS)"
+                  value={editingProject ? editingProject.technologies : newProject.technologies}
+                  onChange={(e) => editingProject ? setEditingProject({ ...editingProject, technologies: e.target.value }) : setNewProject({ ...newProject, technologies: e.target.value })}
+                  className="w-full p-2 rounded bg-yellow-50 border border-gray-600 text-black placeholder-gray-400"
+                />
+                <div className="flex space-x-4">
                   <button
-                    onClick={() => startEdit(project)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white text-sm py-1 px-3 rounded-full transition-colors"
+                    type="submit"
+                    className="bg-yellow-50 hover:bg-orange-500 text-black font-semibold py-2 px-4 rounded-full flex-grow transition-colors"
                   >
-                    Edit
+                    {editingProject ? 'Update Proyek' : 'Tambah Proyek'}
                   </button>
-                  <button
-                    onClick={() => deleteProject(project.id)}
-                    className="bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-3 rounded-full transition-colors"
-                  >
-                    Hapus
-                  </button>
+                  {editingProject && (
+                    <button
+                      type="button"
+                      onClick={() => setEditingProject(null)}
+                      className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-full"
+                    >
+                      Batal
+                    </button>
+                  )}
                 </div>
+              </form>
+            </div>
+
+            <h2 className="text-4xl font-bold mb-4 text-black">Daftar Proyek Anda</h2>
+            {projects.length === 0 ? (
+              <p className="text-black">Tidak ada proyek.</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {projects.map((project) => (
+                  <div key={project.id} className="bg-[#2d2926] p-4 rounded-lg shadow-md flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold text-white">{project.title}</h3>
+                      <p className="text-white text-sm mt-1">{project.description}</p>
+                      <p className="text-white text-xs mt-2 ">Tech: {project.technologies?.join(', ')}</p>
+                      {project.imageUrl && (
+                        <img src={project.imageUrl} alt={project.title} className="w-full h-32 object-cover mt-2 rounded" />
+                      )}
+                    </div>
+                    <div className="mt-4 flex space-x-2">
+                      <button
+                        onClick={() => startEdit(project)}
+                        className="bg-yellow-50 hover:bg-yellow-100 text-black text-sm py-1 px-3 rounded-full"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => deleteProject(project.id)}
+                        className="bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-3 rounded-full"
+                      >
+                        Hapus
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         )}
+
+        {/* Konten Artikel */}
+        {activeTab === 'articles' && (
+          <div>
+            <div className="bg-[#2d2926] p-6 rounded-lg shadow-xl mb-8">
+              <h2 className="text-4xl font-bold mb-4 text-white">
+                {editingArticle ? 'Edit Artikel' : 'Tambah Artikel Baru'}
+              </h2>
+              <form onSubmit={editingArticle ? updateArticle : addArticle} className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Judul Artikel"
+                  value={editingArticle ? editingArticle.title : newArticle.title}
+                  onChange={(e) => editingArticle ? setEditingArticle({ ...editingArticle, title: e.target.value }) : setNewArticle({ ...newArticle, title: e.target.value })}
+                  className="w-full p-2 rounded bg-yellow-50 border border-gray-600 text-black placeholder-gray-400"
+                  required
+                />
+                <textarea
+                  placeholder="Konten Artikel (Markdown)"
+                  value={editingArticle ? editingArticle.content : newArticle.content}
+                  onChange={(e) => editingArticle ? setEditingArticle({ ...editingArticle, content: e.target.value }) : setNewArticle({ ...newArticle, content: e.target.value })}
+                  className="w-full p-2 rounded bg-yellow-50 border border-gray-600 text-black placeholder-gray-400 h-32 resize-y"
+                  required
+                ></textarea>
+                <input
+                  type="text"
+                  placeholder="Penulis (Default: Admin)"
+                  value={editingArticle ? editingArticle.author : (newArticle.author || user?.email || 'Admin')}
+                  onChange={(e) => editingArticle ? setEditingArticle({ ...editingArticle, author: e.target.value }) : setNewArticle({ ...newArticle, author: e.target.value })}
+                  className="w-full p-2 rounded bg-yellow-50 border border-gray-600 text-black placeholder-gray-400"
+                />
+                <input
+                  type="date"
+                  placeholder="Tanggal (YYYY-MM-DD)"
+                  value={editingArticle ? editingArticle.date : (newArticle.date || new Date().toISOString().split('T')[0])}
+                  onChange={(e) => editingArticle ? setEditingArticle({ ...editingArticle, date: e.target.value }) : setNewArticle({ ...newArticle, date: e.target.value })}
+                  className="w-full p-2 rounded bg-yellow-50 border border-gray-600 text-black placeholder-gray-400"
+                />
+                <div className="flex space-x-4">
+                  <button
+                    type="submit"
+                    className="bg-yellow-50 hover:bg-orange-500 text-black font-semibold py-2 px-4 rounded-full flex-grow transition-colors"
+                  >
+                    {editingArticle ? 'Update Artikel' : 'Tambah Artikel'}
+                  </button>
+                  {editingArticle && (
+                    <button
+                      type="button"
+                      onClick={() => setEditingArticle(null)}
+                      className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full"
+                    >
+                      Batal
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
+
+            <h2 className="text-4xl font-bold mb-4 text-black">Daftar Artikel Anda</h2>
+            {articles.length === 0 ? (
+              <p className="text-black">Tidak ada artikel.</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {articles.map((article) => (
+                  <div key={article.id} className="bg-[#2d2926] p-4 rounded-lg shadow-md flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold text-white">{article.title}</h3>
+                      <p className="text-white text-sm mt-1 line-clamp-3">{article.content}</p>
+                      <p className="text-white text-xs mt-2">Oleh: {article.author} pada {article.date}</p>
+                    </div>
+                    <div className="mt-4 flex space-x-2">
+                      <button
+                        onClick={() => startEditArticle(article)}
+                        className="bg-yellow-50 hover:bg-yellow-100 text-black text-sm py-1 px-3 rounded-full"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => deleteArticle(article.id)}
+                        className="bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-3 rounded-full"
+                      >
+                        Hapus
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Konten Pesan Masuk */}
+        {activeTab === 'messages' && (
+  <div>
+    <h2 className="text-4xl font-bold mb-4 text-black">Pesan Masuk</h2>
+    {loadingMessages ? (
+      <p className="text-black">Memuat pesan...</p>
+    ) : messages.length === 0 ? (
+      <p className="text-black">Tidak ada pesan masuk.</p>
+    ) : (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {messages.map((message) => (
+          <div key={message.id} className="bg-[#2d2926] p-4 rounded-lg shadow-md flex flex-col justify-between">
+            <div>
+              <h3 className="text-xl font-bold text-white mb-1">Dari: {message.name}</h3>
+              <p className="text-white text-sm mb-2">Email: {message.email}</p>
+              <p className="text-white text-base">{message.message}</p>
+              <p className="text-white text-xs mt-2">
+                Dikirim: {
+                  message.timestamp
+                    ? typeof message.timestamp === 'object' && message.timestamp.seconds
+                      ? new Date(message.timestamp.seconds * 1000).toLocaleString('id-ID')
+                      : typeof message.timestamp === 'string'
+                        ? message.timestamp
+                        : '-'
+                    : '-'
+                }
+              </p>
+            </div>
+            <div className="mt-4">
+              <button
+                onClick={() => deleteMessage(message.id)}
+                className="bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-3 rounded-full"
+              >
+                Hapus Pesan
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
       </div>
     </main>
   );

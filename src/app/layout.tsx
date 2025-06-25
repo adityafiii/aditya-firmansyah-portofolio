@@ -5,6 +5,7 @@ import { Truculenta } from "next/font/google";
 
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 // Konfigurasi font Truculenta
 const truculenta = Truculenta({ 
@@ -32,6 +33,8 @@ export default function RootLayout({
         <div className="pt-16">
           {children}
         </div>
+        {/* Tambahkan shadow-2xl ke komponen Footer untuk bayangan di atasnya */}
+        <Footer /> {/* --- TAMBAHKAN FOOTER DI SINI --- */}
       </body>
     </html>
   );

@@ -1,19 +1,17 @@
-// src/app/projects/page.tsx
 'use client'; // Pastikan ini ada karena menggunakan hooks dan interaksi klien
 
 import React, { useEffect, useState } from 'react';
 import ProjectCard from '@/components/ProjectCard';
-import { db } from '@/lib/firebase'; // Import objek db dari konfigurasi Firebase Anda
+import { db } from '@/lib/firebase';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { useInView } from '@/hooks/useInView';
-import { featuredProjects } from '@/lib/data'; // IMPORT featuredProjects DARI DATA LOKAL
+import { featuredProjects } from '@/lib/data';
 
 export default function ProjectsPage() {
-  const [allProjects, setAllProjects] = useState<any[]>([]); // State untuk menyimpan semua proyek (lokal + Firestore)
+  const [allProjects, setAllProjects] = useState<any[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
 
   useEffect(() => {
-    // 1. Ambil data dari Firestore
     const q = query(collection(db, "projects"), orderBy("title"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -22,37 +20,28 @@ export default function ProjectsPage() {
         firestoreProjects.push({ id: doc.id, ...doc.data() });
       });
 
-      // 2. Gabungkan dengan featuredProjects (data lokal)
-      // Buat Set dari ID featuredProjects untuk lookup cepat
+      // Gabungkan dengan featuredProjects (data lokal)
       const featuredProjectIds = new Set(featuredProjects.map(p => p.id));
-      
-      // Filter proyek dari Firestore yang TIDAK ada di featuredProjects
       const uniqueFirestoreProjects = firestoreProjects.filter(fp => !featuredProjectIds.has(fp.id));
-
-      // Gabungkan featuredProjects (lokal) dengan proyek unik dari Firestore
-      // Urutkan sesuai keinginan Anda (misal: berdasarkan tanggal, atau campur)
       const mergedProjects = [...featuredProjects, ...uniqueFirestoreProjects];
 
-      setAllProjects(mergedProjects); // Set semua proyek ke state
+      setAllProjects(mergedProjects);
       setLoadingProjects(false);
     }, (error) => {
       console.error("Error fetching all projects from Firestore:", error);
       setLoadingProjects(false);
     });
 
-    return () => unsubscribe(); // Cleanup listener
+    return () => unsubscribe();
   }, []);
 
-  // Hook useInView untuk animasi scroll reveal halaman Hero Projects
+  // Animasi scroll reveal
   const [heroRef, heroInView] = useInView<HTMLElement>({ threshold: 0.1 });
-
-  // PERBAIKAN DI SINI: Hook useInView untuk kontainer daftar proyek
-  const [projectsListRef, projectsListInView] = useInView<HTMLDivElement>({ threshold: 0.1 }); // Baru!
+  const [projectsListRef, projectsListInView] = useInView<HTMLDivElement>({ threshold: 0.1 });
 
   const animationClasses = 'opacity-0 transform transition-all duration-1000 ease-out';
   const animatedInClasses = 'opacity-100 translate-y-0';
   const revealY = 'translate-y-20';
-
 
   if (loadingProjects) {
     return (
@@ -91,17 +80,17 @@ export default function ProjectsPage() {
           {allProjects.length === 0 ? (
             <p className="text-gray-400 text-lg text-center">Belum ada proyek yang ditambahkan.</p>
           ) : (
-            // PERBAIKAN DI SINI: Tambahkan ref={projectsListRef}
             <div ref={projectsListRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {allProjects.map((project, index) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  // PERBAIKAN DI SINI: Gunakan projectsListInView
-                  className={`${animationClasses} ${projectsListInView ? animatedInClasses : revealY}`}
-                  style={{ transitionDelay: `${0.1 * index}s` }}
-                />
-              ))}
+              {allProjects
+                .filter(project => typeof project.imageUrl === "string" && project.imageUrl)
+                .map((project, index) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    className={`${animationClasses} ${projectsListInView ? animatedInClasses : revealY}`}
+                    style={{ transitionDelay: `${0.1 * index}s` }}
+                  />
+                ))}
             </div>
           )}
         </div>

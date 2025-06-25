@@ -1,72 +1,78 @@
-// src/components/HeroSection.tsx
-'use client'; // Pastikan ini adalah baris pertama di file ini
+'use client';
 
 import Image from 'next/image';
-import React from 'react'; // Hanya perlu 'React' karena tidak ada hook state/ref langsung di sini
-import { useInView } from '@/hooks/useInView'; // Import useInView hook untuk scroll reveal awal
+import React from 'react';
+import { useInView } from '@/hooks/useInView';
 
 export default function HeroSection() {
-  // Hook untuk scroll reveal saat halaman dimuat/digulir
-  // Memberitahu TypeScript bahwa ref ini akan di-attach ke HTMLDivElement
-  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.1 }); 
-
-  // Kelas untuk animasi scroll reveal
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.1 });
   const animationClasses = 'opacity-0 transform transition-all duration-1000 ease-out';
   const animatedInClasses = 'opacity-100 translate-y-0 translate-x-0';
-  const revealY = 'translate-y-20'; // Muncul dari 20px di bawah
+  const revealY = 'translate-y-20';
 
-  // Untuk animasi wave pada teks
-  const textContent = "ADITYA FIRMANSYAH";
-  const characters = textContent.split('');
+  const baseText = "ADITYA FIRMANSYAH";
+  const textContent = `${baseText} • ${baseText} • ${baseText} • ${baseText} • ${baseText} •`;
+
+  // Ukuran lingkaran dan font untuk teks melingkar
+const textCircleRadius = 1300; // Lingkaran teks lebih besar dari foto profil
+const svgViewBoxSize = textCircleRadius * 2 + 20;
+const svgCenter = svgViewBoxSize / 2;
 
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-screen text-center text-white bg-gray-950 p-8 pt-24 md:pt-16 overflow-hidden">
-      {/* Background Effect (opsional) */}
-      <div className="absolute inset-0 z-0 opacity-20">
-        {/* Anda bisa menambahkan pola atau gradasi di sini jika ingin */}
-      </div>
-
-      {/* Konten Utama: Teks dan Foto */}
-      <div className="relative z-10 container mx-auto flex flex-col items-center gap-12 max-w-4xl" ref={ref}> {/* Ref untuk scroll reveal */}
-        {/* Teks "ADITYA FIRMANSYAH" dengan animasi gelombang terus-menerus */}
-        <div 
-          className={`flex-1 max-w-2xl text-center ${animationClasses} ${inView ? animatedInClasses : revealY}`} 
-          style={{ transitionDelay: '0.2s' }} // Delay untuk teks setelah HeroSection terlihat
+  <section className="relative flex flex-col items-center justify-center min-h-screen text-center text-white bg-white p-8 pt-24 md:pt-16 overflow-hidden">
+    {/* ... */}
+    <div className="relative z-10 container mx-auto flex flex-col items-center gap-6 max-w-4xl" ref={ref}>
+      <div
+        className={`relative flex items-center justify-center ${animationClasses} ${inView ? animatedInClasses : revealY}`}
+        style={{
+          transitionDelay: '0.2s',
+          width: 'min(90vw, 560px)', // Lebih besar dari foto profil
+          height: 'min(90vw, 560px)'
+        }}
+      >
+        {/* SVG untuk Teks Melingkar */}
+        <svg
+          className="absolute top-0 left-0 w-full h-full z-10 pointer-events-none"
+          viewBox={`0 0 ${svgViewBoxSize} ${svgViewBoxSize}`}
+          preserveAspectRatio="xMidYMid meet"
         >
-          <h1 
-            className="text-6xl sm:text-7xl lg:text-8xl font-extrabold leading-tight mb-8 text-blue-400"
-            style={{ whiteSpace: 'nowrap' }} // Penting untuk mencegah teks pecah baris saat animasi gelombang
+          <defs>
+            <path
+              id="circlePath"
+              d={`M ${svgCenter - textCircleRadius},${svgCenter} 
+                  a ${textCircleRadius},${textCircleRadius} 0 1,0 ${textCircleRadius * 2},0 
+                  a ${textCircleRadius},${textCircleRadius} 0 1,0 -${textCircleRadius * 2},0`}
+              fill="none"
+            />
+          </defs>
+          <text
+            fill="currentColor"
+            className="text-black font-extrabold"
+            style={{
+              fontSize: '204px', // Sesuaikan agar proporsional
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+            }}
           >
-            {characters.map((char, index) => (
-              <span
-                key={index} // Menggunakan index sebagai key karena ini animasi continuous
-                className="inline-block animate-wave-text" // Terapkan animasi gelombang
-                style={{ animationDelay: `${index * 0.05}s` }} // Delay untuk efek gelombang berurutan
-              >
-                {char === ' ' ? '\u00A0' : char} {/* Mengganti spasi dengan non-breaking space */}
-              </span>
-            ))}
-          </h1>
-        </div>
+            <textPath href="#circlePath" startOffset="0%" textAnchor="start">
+              {textContent}
+            </textPath>
+          </text>
+        </svg>
 
         {/* Foto Profil */}
-        <div 
-          className={`flex justify-center mt-12 md:mt-16 ${animationClasses} ${inView ? animatedInClasses : revealY}`} 
-          style={{ transitionDelay: '0.4s' }} // Delay untuk foto setelah teks muncul
-        >
-          {/* Menerapkan animasi pulse yang halus pada foto */}
-          <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-500 ring-offset-4 ring-offset-black animate-pulse-subtle">
-            <Image
-              src="/images/Adet.png" // Path ke file logo Anda, digunakan sebagai foto profil
-              alt="Foto Profil ADIT"
-              width={500}
-              height={500}
-              className="object-cover w-full h-full"
-              priority
-            />
-          </div>
+        <div className="relative z-0 w-64 h-64 sm:w-120 sm:h-120 rounded-full overflow-hidden shadow-2xl ring-4 ring-black ring-offset-black animate-pulse-subtle">
+          <Image
+            src="/images/Adet.png"
+            alt="Foto Profil ADIT"
+            width={500}
+            height={500}
+            className="object-cover w-full h-full"
+            priority
+          />
         </div>
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }

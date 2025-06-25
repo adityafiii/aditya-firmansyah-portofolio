@@ -21,16 +21,16 @@ export default function AboutSection() {
     <section 
       id="about" 
       ref={ref} // Attach ref ke elemen section
-      className="py-20 px-8 bg-gray-800 text-white flex flex-col items-center overflow-hidden" // overflow-hidden untuk mencegah scrollbar saat animasi
+      className="py-20 px-8 bg-yellow-50 text-black flex flex-col items-center overflow-hidden" // overflow-hidden untuk mencegah scrollbar saat animasi
     >
       <div className="container mx-auto text-center max-w-4xl">
         <h2 
-          className={`text-4xl font-extrabold mb-6 text-blue-400 ${animationClasses} ${inView ? animatedInClasses : textAnimation}`}
+          className={`text-6xl font-extrabold mb-6 text-black ${animationClasses} ${inView ? animatedInClasses : textAnimation}`}
         >
           Tentang Saya
         </h2>
         <p 
-          className={`text-lg md:text-xl leading-relaxed mb-6 ${animationClasses} ${inView ? animatedInClasses : textAnimation}`} 
+          className={`text-lg md:text-3xl leading-relaxed mb-6 ${animationClasses} ${inView ? animatedInClasses : textAnimation}`} 
           style={{ transitionDelay: '0.1s' }} // Delay tambahan untuk p pertama
         >
           Saya adalah seorang mahasiswa jurusan Teknik Informatika, yang memiliki kemampuan cukup untuk membangun website yang responsif, interaktif, dan intuitif. Saya memiliki skill yang lumayan memadai untuk mengubah ide menjadi solusi digital yang estetis.
@@ -39,7 +39,7 @@ export default function AboutSection() {
         {/* Tombol ke halaman About yang lebih detail */}
         <Link 
           href="/about" 
-          className={`bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transform hover:scale-105 inline-block ${animationClasses} ${inView ? animatedInClasses : textAnimation}`}
+          className={`bg-[#2d2926] hover:bg-orange-500 md:text-2xl text-white font-semibold py-4 px-10 rounded-full shadow-md transform hover:scale-105 inline-block ${animationClasses} ${inView ? animatedInClasses : textAnimation}`}
           style={{ transitionDelay: '0.3s' }} // Delay tambahan untuk tombol
         >
           Lihat selengkapnya tentang saya!

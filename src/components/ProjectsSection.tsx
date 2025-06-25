@@ -22,13 +22,13 @@ export default function ProjectsSection() {
   return (<section
       id="projects"
       ref={ref} // Attach ref ke elemen section
-      className="py-20 px-8 bg-gray-800 text-white flex flex-col items-center overflow-hidden" // overflow-hidden untuk mencegah scrollbar saat animasi
+      className="py-20 px-8 bg-yellow-50 text-white flex flex-col items-center overflow-hidden" // overflow-hidden untuk mencegah scrollbar saat animasi
     >
       <div className="container mx-auto text-center">
         <h2
-          className={`text-4xl font-extrabold mb-12 text-blue-400 ${animationClasses} ${inView ? animatedInClasses : revealAnimation}`}
+          className={`text-6xl font-extrabold mb-12 text-black ${animationClasses} ${inView ? animatedInClasses : revealAnimation}`}
         >
-          Proyek Unggulan (Sedang dalam Proses pengembangan)
+          Proyek Unggulan
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -45,7 +45,7 @@ export default function ProjectsSection() {
 
         {/* Tombol Lihat Semua Proyek (opsional, jika ada halaman proyek terpisah) */}
         <div className={`mt-16 ${animationClasses} ${inView ? animatedInClasses : revealAnimation}`} style={{ transitionDelay: `${0.1 * featuredProjects.length}s` }}>
-          <Link href="/projects" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-lg transform hover:scale-105 inline-block">
+          <Link href="/projects" className="bg-[#2d2926] hover:bg-orange-500 text-white md:text-2xl font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-lg transform hover:scale-105 inline-block">
             Lihat Semua Proyek
           </Link>
         </div>

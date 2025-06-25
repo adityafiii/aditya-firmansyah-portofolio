@@ -2,7 +2,7 @@
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
-import ProjectsSection from "@/components/ProjectsSection"; // Import ProjectsSection
+import ProjectsSection from "@/components/ProjectsSection"; 
 
 export default function HomePage() {
   return (
@@ -10,7 +10,7 @@ export default function HomePage() {
       <HeroSection />
       <AboutSection />
       <SkillsSection />
-      <ProjectsSection /> {/* Tambahkan ProjectsSection di sini */}
+      <ProjectsSection />
     </main>
   );
 }

@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
-import Image from 'next/image'; // Import komponen Image dari Next.js
+import Image from 'next/image';
+
 
 export default function Navbar() {
   // State untuk mengontrol apakah menu overlay terbuka atau tertutup
@@ -18,33 +19,34 @@ export default function Navbar() {
     { name: 'Beranda', href: '/' },
     { name: 'Tentang', href: '/about' },
     { name: 'Harga', href: '/pricing' },
+    { name: 'Artikel', href: '/articles' },
     { name: 'Kontak', href: '/contact' },
   ];
 
   return (
-    <nav className="bg-gray-950 p-4 fixed w-full z-20 top-0 shadow-lg">
+    <nav className="bg-yellow-50 py-1 px-5 fixed w-full z-20 top-0 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo/Nama Portfolio */}
         <Link href="/" onClick={handleNavLinkClick}>
           <Image
-            src="/images/Logoo.png" // Path ke logo Anda
+            src="/images/ELOGOO.png"
             alt="Logo ADIT Portfolio"
-            width={100} // Sesuaikan lebar logo
-            height={40} // Sesuaikan tinggi logo
-            className="h-auto" // Memastikan tinggi otomatis menyesuaikan lebar
+            width={100}
+            height={200}
+            className="h-auto"
           />
         </Link>
 
-        {/* Hamburger Menu Icon (SELALU TERLIHAT di semua ukuran layar) */}
+        {/* Hamburger Menu Icon */}
         <div>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-2 transform hover:scale-110 transition-all duration-300"
+            className="text-black focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-2 transform hover:scale-110 transition-all duration-300"
             aria-label="Toggle menu"
           >
             {/* Ikon Tiga Garis (Hamburger) */}
             <svg
-              className="w-8 h-8"
+              className="w-12 h-12"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -56,10 +58,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay (muncul saat hamburger diklik, dan sekarang bisa muncul di semua ukuran layar) */}
+      {/* Mobile Menu Overlay (muncul saat hamburger diklik, sekarang transparan) */}
+      {/* PERUBAHAN DI SINI: bg-gray-950 menjadi bg-black/75 */}
       <div
         className={`
-          fixed inset-0 bg-gray-950 z-40 flex flex-col items-center justify-center space-y-8 transition-transform duration-300 ease-in-out
+          fixed inset-0 bg-black/75 z-40 flex flex-col items-center justify-center space-y-8 transition-transform duration-300 ease-in-out
           ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
         `}
       >
@@ -81,17 +84,17 @@ export default function Navbar() {
           </svg>
         </button>
 
-        {/* Link Navigasi (Ukuran Teks Diperbesar & Animasi Hover & Animasi Masuk) */}
+        {/* Link Navigasi */}
         {navLinks.map((link, index) => (
           <Link
-            key={link.name} // Key untuk setiap item dalam map
+            key={link.name}
             href={link.href}
             className={`
-              text-white text-5xl font-bold hover:text-blue-400 inline-block
+              text-white text-5xl font-bold hover:text-orange-500 inline-block
               transform hover:scale-120 transition-all duration-1000 transition-transform
-              ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'} // Animasi hanya saat menu terbuka
+              ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'}
             `}
-            style={{ transitionDelay: isMenuOpen ? `${0.1 + (index * 0.1)}s` : '0s' }} // Staggered delay
+            style={{ animationDelay: isMenuOpen ? `${0.1 + (index * 0.1)}s` : '0s' }}
             onClick={handleNavLinkClick}
           >
             {link.name}
