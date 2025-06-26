@@ -10,9 +10,11 @@ import { useInView } from '@/hooks/useInView'; // Import useInView hook for scro
 export type Article = {
   id: string;
   title: string;
-  content: string; // The full content of the article
+  content?: string; // Optional, for backward compatibility
   author: string;
   date: string; // Date in YYYY-MM-DD format
+  imageUrl?: string;
+  sections?: { title: string; content: string }[];
 };
 
 export default function ArticlesPage() {
@@ -58,18 +60,18 @@ export default function ArticlesPage() {
   return (
     <main className="min-h-screen pt-16 bg-yellow-50 text-white overflow-hidden">
       {/* Hero Section for Articles Page */}
-      <section 
+      <section
         ref={heroRef}
         className="py-20 bg-yellow-50 text-center"
       >
         <div className="container mx-auto px-8">
-          <h1 
+          <h1
             className={`text-5xl font-extrabold mb-4 text-black ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0s' }}
           >
-            Artikel Terbaru
+            Artikel
           </h1>
-          <p 
+          <p
             className={`text-xl text-black ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0.1s' }}
           >
@@ -85,22 +87,32 @@ export default function ArticlesPage() {
             <p className="text-black text-lg text-center">Belum ada artikel yang dipublikasikan.</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {articles.map((article, index) => (
-                <div 
-                  key={article.id} 
-                  className={`bg-[#2d2926] p-6 rounded-lg shadow-xl flex flex-col justify-between 
-                              transform hover:scale-105 transition-transform duration-300
-                              ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
-                  style={{ transitionDelay: `${0.2 * index}s` }}
-                >
+              {articles.map((article) => (
+                <div key={article.id} className="bg-[#2d2926] p-4 rounded-lg shadow-md flex flex-col justify-between">
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-2">{article.title}</h3>
-                    <p className="text-gray-400 text-sm mb-4">Oleh: {article.author} pada {article.date}</p>
-                    <p className="text-gray-300 text-base line-clamp-4">{article.content}</p>
+                    <h3 className="text-xl font-bold text-white">{article.title}</h3>
+                    {/* Tampilkan gambar jika ada */}
+                    {article.imageUrl && (
+                      <img
+                        src={article.imageUrl.startsWith('http') ? article.imageUrl : `/images/${article.imageUrl}`}
+                        alt={article.title}
+                        className="w-full h-40 object-cover mt-2 rounded"
+                      />
+                    )}
+                    {/* Tampilkan ringkasan dari section pertama, atau content lama */}
+                    <p className="text-white text-sm mt-1 line-clamp-3">
+                      {article.sections && Array.isArray(article.sections) && article.sections.length > 0
+                        ? article.sections[0].content
+                        : article.content}
+                    </p>
+                    <p className="text-white text-xs mt-2">Oleh: {article.author} pada {article.date}</p>
                   </div>
-                  <div className="mt-4">
-                    <Link href={`/articles/${article.id}`} className="text-white hover:underline">
-                      Baca Selengkapnya &rarr;
+                  <div className="mt-4 flex space-x-2">
+                    <Link
+                      href={`/articles/${article.id}`}
+                      className="bg-yellow-50 hover:bg-yellow-100 text-black text-sm py-1 px-3 rounded-full"
+                    >
+                      Baca selengkapnya
                     </Link>
                   </div>
                 </div>
@@ -110,5 +122,5 @@ export default function ArticlesPage() {
         </div>
       </section>
     </main>
-    );
+  );
 }

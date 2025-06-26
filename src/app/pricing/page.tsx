@@ -7,10 +7,10 @@ export default function PricingPage() {
   const pricingPlans = [
     {
       name: 'Paket Dasar',
-      price: 'Rp 5.000.000',
-      description: 'Cocok untuk website pribadi atau startup kecil.',
+      price: 'Rp 3.000.000',
+      description: 'Individu atau UMKM yang membutuhkan website sederhana untuk menampilkan informasi dasar dan kontak., Proyek pribadi seperti landing page atau profil online yang ringkas., Mereka yang memiliki anggaran terbatas namun tetap ingin memiliki kehadiran online yang profesional.',
       features: [
-        'Desain Responsive (1 halaman)',
+        'Desain Responsif (1 Halaman)',
         'Integrasi SEO Dasar',
         'Waktu Pengerjaan: 2 Minggu',
         'Revisi: 1 Kali',
@@ -21,10 +21,11 @@ export default function PricingPage() {
     },
     {
       name: 'Paket Standar',
-      price: 'Rp 10.000.000',
-      description: 'Ideal untuk bisnis kecil hingga menengah dengan kebutuhan lebih.',
+      price: 'Rp 5.000.000',
+      description: 'Profesional individu (desainer, penulis, fotografer, konsultan, dll.) yang ingin menampilkan portofolio atau layanan secara lebih detail.,  UMKM dan startup yang membutuhkan website informatif dengan beberapa halaman untuk menjelaskan produk/layanan mereka.,  Mereka yang mencari solusi website yang lebih lengkap dan interaktif',
       features: [
-        'Desain Responsive (hingga 5 halaman)',
+        'Desain Responsif (hingga 4 halaman)',
+        'Integrasi SEO Lanjutan',
         'Integrasi Blog / Portofolio',
         'Optimasi Performa',
         'Waktu Pengerjaan: 4 Minggu',
@@ -36,8 +37,8 @@ export default function PricingPage() {
     },
     {
       name: 'Paket Kustom',
-      price: 'Mulai dari Rp 15.000.000',
-      description: 'Solusi sesuai kebutuhan spesifik Anda dan skala besar.',
+      price: 'Mulai dari Rp 10.000.000',
+      description: 'Bisnis atau individu dengan kebutuhan website yang sangat spesifik dan unik.,  Proyek yang membutuhkan fungsionalitas kompleks (misalnya, e-commerce, sistem reservasi, integrasi API, fitur interaktif).,  Klien yang mencari solusi pengembangan website yang sepenuhnya disesuaikan dengan visi dan skala besar mereka.',
       features: [
         'Desain & Fitur Kustom',
         'Integrasi Database & API',
@@ -154,6 +155,10 @@ export default function PricingPage() {
             Pertanyaan Umum
           </h2>
           <div className={`text-center space-y-4 ${animationClasses} ${faqInView ? animatedInClasses : revealY}`} style={{ transitionDelay: '0.1s' }}>
+            <h3 className="text-xl font-semibold text-black">Bagaimana cara pesannya?</h3>
+            <p>
+              Pilih paket yang sesuai, lalu isi formulir kontak dengan pesan "saya ingin memesan paket (sebutkan paket yang anda ingin pilih)". Saya akan menghubungi Anda untuk detail lebih lanjut.
+            </p>
             <h3 className="text-xl font-semibold text-black">Bagaimana proses kerjanya?</h3>
             <p>
               Proses dimulai dengan konsultasi awal untuk memahami kebutuhan Anda, diikuti dengan proposal, pengembangan, revisi, dan peluncuran.

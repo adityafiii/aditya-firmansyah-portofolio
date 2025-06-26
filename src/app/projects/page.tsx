@@ -5,7 +5,7 @@ import ProjectCard from '@/components/ProjectCard';
 import { db } from '@/lib/firebase';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { useInView } from '@/hooks/useInView';
-import { featuredProjects } from '@/lib/data';
+import { projects } from '@/lib/data';
 
 export default function ProjectsPage() {
   const [allProjects, setAllProjects] = useState<any[]>([]);
@@ -21,9 +21,9 @@ export default function ProjectsPage() {
       });
 
       // Gabungkan dengan featuredProjects (data lokal)
-      const featuredProjectIds = new Set(featuredProjects.map(p => p.id));
+      const featuredProjectIds = new Set(projects.map(p => p.id));
       const uniqueFirestoreProjects = firestoreProjects.filter(fp => !featuredProjectIds.has(fp.id));
-      const mergedProjects = [...featuredProjects, ...uniqueFirestoreProjects];
+      const mergedProjects = [...projects, ...uniqueFirestoreProjects];
 
       setAllProjects(mergedProjects);
       setLoadingProjects(false);
@@ -45,28 +45,28 @@ export default function ProjectsPage() {
 
   if (loadingProjects) {
     return (
-      <main className="min-h-screen pt-16 bg-gray-900 text-white flex items-center justify-center">
-        <h1 className="text-4xl font-extrabold text-blue-400">Memuat Proyek...</h1>
+      <main className="min-h-screen pt-16 bg-yellow-50 text-black flex items-center justify-center">
+        <h1 className="text-4xl font-extrabold text-black">Memuat Proyek...</h1>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen pt-16 bg-gray-900 text-white overflow-hidden">
+    <main className="min-h-screen pt-16 bg-yellow-50 text-white overflow-hidden">
       {/* Bagian Hero untuk Halaman Proyek */}
       <section 
         ref={heroRef}
-        className="py-20 bg-gray-950 text-center"
+        className="py-20 bg-yellow-50 text-center"
       >
         <div className="container mx-auto px-8">
           <h1 
-            className={`text-5xl font-extrabold mb-4 text-blue-400 ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
+            className={`text-5xl font-extrabold mb-4 text-black ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0s' }}
           >
             Semua Proyek Saya
           </h1>
           <p 
-            className={`text-xl text-gray-300 ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
+            className={`text-xl text-gray-950 ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0.1s' }}
           >
             Lihat daftar lengkap karya-karya saya.
@@ -75,7 +75,7 @@ export default function ProjectsPage() {
       </section>
 
       {/* Bagian Daftar Proyek Lengkap */}
-      <section className="py-16 px-8 bg-gray-900">
+      <section className="py-16 px-8 bg-yellow-50">
         <div className="container mx-auto max-w-6xl">
           {allProjects.length === 0 ? (
             <p className="text-gray-400 text-lg text-center">Belum ada proyek yang ditambahkan.</p>

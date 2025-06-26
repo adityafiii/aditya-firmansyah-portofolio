@@ -24,16 +24,11 @@ export default function AboutSection() {
       className="py-20 px-8 bg-yellow-50 text-black flex flex-col items-center overflow-hidden" // overflow-hidden untuk mencegah scrollbar saat animasi
     >
       <div className="container mx-auto text-center max-w-4xl">
-        <h2 
-          className={`text-6xl font-extrabold mb-6 text-black ${animationClasses} ${inView ? animatedInClasses : textAnimation}`}
-        >
-          Tentang Saya
-        </h2>
         <p 
           className={`text-lg md:text-3xl leading-relaxed mb-6 ${animationClasses} ${inView ? animatedInClasses : textAnimation}`} 
           style={{ transitionDelay: '0.1s' }} // Delay tambahan untuk p pertama
         >
-          Saya adalah seorang mahasiswa jurusan Teknik Informatika, yang memiliki kemampuan cukup untuk membangun website yang responsif, interaktif, dan intuitif. Saya memiliki skill yang lumayan memadai untuk mengubah ide menjadi solusi digital yang estetis.
+          Seorang mahasiswa jurusan Teknik Informatika, yang memiliki kemampuan cukup untuk membangun website yang responsif, interaktif, dan intuitif. Saya memiliki skill yang lumayan memadai untuk mengubah ide menjadi solusi digital yang estetis.
           {/* Saya seorang **[Profesi Anda, misalnya: Pengembang Web Front-end]** dengan pengalaman dalam membangun aplikasi web yang responsif, intuitif, dan performa tinggi. Saya memiliki passion dalam mengubah ide menjadi solusi digital yang fungsional dan estetis. */}
         </p>
         {/* Tombol ke halaman About yang lebih detail */}
