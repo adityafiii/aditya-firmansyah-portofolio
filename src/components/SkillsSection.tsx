@@ -5,39 +5,19 @@ import { useInView } from '@/hooks/useInView';
 
 const skills = [
   { 
-    name: 'TypeScript', 
-    category: 'Bahasa Pemrograman',
-    description: 'TypeScript adalah bahasa pemrograman berbasis JavaScript yang menambahkan tipe statis untuk meningkatkan keamanan dan skalabilitas kode.'
+    name: 'Web Development', 
+    category: 'Web Development',
+    description: 'Web development adalah proses membangun dan memelihara situs web atau aplikasi web. Ini mencakup semua hal yang terlibat dalam membuat sebuah situs agar terlihat menarik, berfungsi dengan baik, dan bisa diakses oleh pengguna di internet.'
   },
   { 
-    name: 'Next.js', 
-    category: 'Framework React',
-    description: 'Next.js adalah framework React untuk membangun aplikasi web modern dengan fitur SSR, SSG, dan API routes.'
-  },
-  { 
-    name: 'Tailwind CSS', 
-    category: 'Styling',
-    description: 'Tailwind CSS adalah framework utility-first untuk styling yang memungkinkan pembuatan UI secara cepat dan konsisten.'
+    name: 'Web Design', 
+    category: 'Web Desain',
+    description: 'Web Design adalah proses merancang tampilan dan pengalaman pengguna pada website agar menarik dan mudah digunakan.'
   },
   { 
     name: 'Git & GitHub', 
     category: 'Version Control',
     description: 'Git adalah sistem kontrol versi terdistribusi, sedangkan GitHub adalah platform hosting kode berbasis Git untuk kolaborasi.'
-  },
-  { 
-    name: 'Web Design', 
-    category: 'Desain',
-    description: 'Web Design adalah proses merancang tampilan dan pengalaman pengguna pada website agar menarik dan mudah digunakan.'
-  },
-  { 
-    name: 'UI/UX Principles', 
-    category: 'Desain',
-    description: 'UI/UX Principles adalah prinsip-prinsip dalam merancang antarmuka dan pengalaman pengguna yang efektif dan menyenangkan.'
-  },
-  { 
-    name: 'Figma', 
-    category: 'Tools Desain',
-    description: 'Figma adalah alat desain kolaboratif berbasis cloud untuk membuat prototipe, wireframe, dan desain UI.'
   },
   { 
     name: 'Firebase', 

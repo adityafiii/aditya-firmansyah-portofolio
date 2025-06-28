@@ -18,7 +18,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Beranda', href: '/' },
     { name: 'Tentang', href: '/about' },
-    { name: 'Harga', href: '/pricing' },
+    { name: 'Layanan', href: '/pricing' },
     { name: 'Artikel', href: '/articles' },
     { name: 'Kontak', href: '/contact' },
   ];

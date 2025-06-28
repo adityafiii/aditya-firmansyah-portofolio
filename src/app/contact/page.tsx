@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { useInView } from '@/hooks/useInView'; 
+import { useInView } from '@/hooks/useInView';
 import { db } from '@/lib/firebase'; // Import db
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'; // Import Firestore functions
 
@@ -8,6 +8,7 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     message: ''
   });
   const [status, setStatus] = useState('');
@@ -17,19 +18,20 @@ export default function ContactPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setStatus('Mengirim...');
+    e.preventDefault();
+    setStatus('Mengirim...');
     try {
       // Logic untuk mengirim data form ke koleksi "messages" di Firestore
       const docRef = await addDoc(collection(db, "messages"), {
         name: formData.name,
         email: formData.email,
+        phone: formData.phone,
         message: formData.message,
         timestamp: serverTimestamp(), // Menambahkan timestamp otomatis dari Firestore
       });
       console.log("Pesan dikirim dengan ID: ", docRef.id);
       setStatus('Pesan berhasil dikirim!');
-      setFormData({ name: '', email: '', message: '' }); // Reset form
+      setFormData({ name: '', email: '', phone: '', message: '' }); // Reset form
     } catch (error) {
       console.error("Error saat mengirim pesan ke Firestore: ", error);
       setStatus('Terjadi kesalahan saat mengirim pesan.');
@@ -37,9 +39,9 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen pt-16 bg-white text-white">
+    <main className="min-h-screen pt-16 bg-yellow-50 text-white">
       {/* Hero section for the Contact page */}
-      <section className="py-20 bg-white text-center">
+      <section className="py-20 bg-bg-yellow-50 text-center">
         <div className="container mx-auto px-8">
           <h1 className="text-6xl font-extrabold mb-4 text-black animate-fade-in-up">
             Hubungi Saya
@@ -51,7 +53,7 @@ export default function ContactPage() {
       </section>
 
       {/* Section containing the contact form and contact information */}
-      <section className="py-16 px-8 bg-yellow-50">
+      <section className="py-16 px-8 bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact Form Column */}
@@ -83,6 +85,22 @@ export default function ContactPage() {
                     placeholder="nama@contoh.com"
                     required
                   />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-black text-sm font-bold mb-2">Nomor Telepon</label>
+                  <div className="flex">
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="shadow appearance-none border rounded-r w-full py-3 px-4 text-white leading-tight focus:outline-none focus:shadow-outline bg-[#2d2926] border-black focus:border-blue-500 transition-colors duration-200"
+                      placeholder="081234567890"
+                      pattern="[0-9]{9,13}"
+                      required
+                    />
+                  </div>
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-black text-sm font-bold mb-2">Pesan Anda</label>
@@ -120,7 +138,7 @@ export default function ContactPage() {
                   {/* SVG for Email Icon */}
                   <svg className="w-6 h-6 text-black mr-3" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M2.93 2.93a1 1 0 011.414 0L10 8.586l5.657-5.657a1 1 0 111.414 1.414L11.414 10l5.657 5.657a1 1 0 01-1.414 1.414L10 11.414l-5.657 5.657a1 1 0 01-1.414-1.414L8.586 10 2.93 4.343a1 1 0 010-1.414z" clipRule="evenodd" />
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 011.414 1.414L11.414 10l2.293 2.293a1 1 0 01-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 10 6.293 7.707a1 1 0 010-1.414z" clipRule="evenodd"/>
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 011.414 1.414L11.414 10l2.293 2.293a1 1 0 01-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 10 6.293 7.707a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                   Email: <a href="mailto:namaanda@email.com" className="ml-2 text-black hover:underline">adityafirmansyah1325@email.com</a>
                 </p>

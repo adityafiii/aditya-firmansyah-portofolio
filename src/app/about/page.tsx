@@ -18,6 +18,8 @@ export default function AboutPage() {
   const [experienceRef, experienceInView] = useInView<HTMLElement>({ threshold: 0.1 });
   const [educationRef, educationInView] = useInView<HTMLElement>({ threshold: 0.1 });
   const [contactCTARef, contactCTAInView] = useInView<HTMLElement>({ threshold: 0.1 });
+  const [organizationRef, organizationInView] = useInView<HTMLElement>({ threshold: 0.1 });
+  const [activityRef, activityInView] = useInView<HTMLElement>({ threshold: 0.1 });
 
   // Fungsi untuk mendapatkan durasi animasi mengetik (Jika ingin digunakan lagi, pastikan keyframes di tailwind.config.ts ada)
   // const getTypingAnimation = (textLength: number, delay: number) => {
@@ -26,9 +28,9 @@ export default function AboutPage() {
   //   return `typing ${duration}s steps(${steps}, end) forwards, blink-caret .75s step-end infinite ${delay}s`;
   // };
 
-  const paragraph1 = `Halo! Saya ADITYA, Seorang Mahasiswa yang berdedikasi dengan pengalaman dalam membangun aplikasi web yang modern dan efisien. Perjalanan saya di dunia teknologi dimulai sejak 2025, didorong oleh rasa ingin tahu yang tak ada habisnya tentang bagaimana teknologi dapat memecahkan masalah nyata dan menciptakan pengalaman pengguna yang luar biasa.`;
-  const paragraph2 = `Saya memiliki keahlian mendalam dalam menggunakan teknologi seperti React.js, Next.js, dan Tailwind CSS untuk menciptakan antarmuka pengguna yang responsif, intuitif, dan menarik. Saya juga akrab dengan Firebase, Github, Figma, dll yang memungkinkan saya untuk dapat lebih mudah membangun sebuah website yang terstruktur.`;
-  const paragraph3 = `Saya percaya bahwa kunci dari sebuah proyek yang sukses adalah kombinasi dari kode yang bersih, desain yang baik, dan komunikasi yang efektif. Saya selalu siap untuk mempelajari hal baru dan menghadapi tantangan kompleks, dengan tujuan akhir menghasilkan solusi yang inovatif dan memberikan nilai nyata.`;
+  const paragraph1 = `Halo! Saya ADITYA, seorang mahasiswa dan pengembang web yang bersemangat dalam membangun aplikasi web modern dan efisien. Sejak tahun 2025, saya memulai fokus menciptakan pengalaman pengguna yang luar biasa melalui teknologi.`;
+  const paragraph2 = `Skill saya untuk membangun sebuah web tergolong cukup mahir khususnya mengembangkan antarmuka pengguna yang responsif dan menarik. Selain itu, saya juga akrb dengan Firebase sebagai platform backend, GitHub untuk manajemen versi dan kolaborasi, serta Figma untuk desain dan prototyping UI/UX, memastikan saya dapat membangun website yang terstruktur dari awal hingga akhir.`;
+  const paragraph3 = `Saya berkomitmen untuk menghasilkan kode yang bersih, desain yang baik, dan selalu siap menghadapi tantangan baru untuk menciptakan solusi inovatif.`;
 
   // Pastikan 'return' dan '(' dan '<main>' berada di baris yang sama
   return (<main className="min-h-screen pt-16 bg-yellow-50 text-white overflow-hidden"> {/* overflow-hidden di main */}
@@ -50,13 +52,6 @@ export default function AboutPage() {
           >
             Mengenal Lebih Detail Tentang Diri Saya
           </p>
-          <a
-            href="/articles"
-            className={`inline-block mt-6 bg-[#2d2926] hover:bg-orange-500 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-all duration-300 text-lg ${animationClasses} ${heroInView ? animatedInClasses : revealY}`}
-            style={{ transitionDelay: '0.1s' }}
-          >
-            Artikel Saya
-          </a>
         </div>
       </section>
 
@@ -94,6 +89,54 @@ export default function AboutPage() {
                 {paragraph3}
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section 
+        ref={activityRef}
+        className="py-16 px-8 bg-yellow-50"
+      >
+        <div className="container mx-auto max-w-4xl">
+          <h2 
+            className={`text-6xl font-extrabold mb-10 text-black text-center ${animationClasses} ${activityInView ? animatedInClasses : revealY}`}
+            style={{ transitionDelay: '0s' }}
+          >
+            Aktivitas
+          </h2>
+          <div className="space-y-8 text-center">
+            <div 
+              className={`${animationClasses} ${activityInView ? animatedInClasses : revealY}`} 
+              style={{ transitionDelay: '0.1s' }}
+            >
+              <h3 className="text-2xl font-bold text-black">Sagaraku Website</h3>
+              <p className="text-black text-lg">Bekerja sama untuk dalam pembuatan website UMKM Maritim </p>
+            </div>
+            {/* Tambahkan lebih banyak pengalaman jika ada */}
+          </div>
+        </div>
+      </section>
+
+      <section 
+        ref={organizationRef}
+        className="py-16 px-8 bg-white"
+      >
+        <div className="container mx-auto max-w-4xl">
+          <h2 
+            className={`text-6xl font-extrabold mb-10 text-black text-center ${animationClasses} ${organizationInView ? animatedInClasses : revealY}`}
+            style={{ transitionDelay: '0s' }}
+          >
+            Organisasi
+          </h2>
+          <div className="space-y-8 text-center">
+            <div 
+              className={`${animationClasses} ${activityInView ? animatedInClasses : revealY}`} 
+              style={{ transitionDelay: '0.1s' }}
+            >
+              <h3 className="text-2xl font-bold text-black">HMTI</h3>
+              <p className="text-black text-lg">Bagian Aspirasi Minat Bakat (2022)</p>
+            </div>
+            {/* Tambahkan lebih banyak pengalaman jika ada */}
           </div>
         </div>
       </section>
@@ -136,7 +179,7 @@ export default function AboutPage() {
             className={`text-6xl font-extrabold mb-10 text-black text-center ${animationClasses} ${educationInView ? animatedInClasses : revealY}`}
             style={{ transitionDelay: '0s' }}
           >
-            Pendidikan Terakhir
+            Pendidikan
           </h2>
           <div className="space-y-8 text-center">
             <div 
@@ -145,6 +188,13 @@ export default function AboutPage() {
             >
               <h3 className="text-2xl font-bold text-black">Teknik Komputer dan Jaringan (TKJ)</h3>
               <p className="text-black text-lg">SMK Negeri 4 Tanjungpinang | 2019 - 2022</p>
+            </div>
+            <div 
+              className={`${animationClasses} ${educationInView ? animatedInClasses : revealY}`} 
+              style={{ transitionDelay: '0.1s' }}
+            >
+              <h3 className="text-2xl font-bold text-black">Teknik Informatika</h3>
+              <p className="text-black text-lg">Universitas Maritim Raja Ali Haji | 2022 - Sekarang</p>
             </div>
             {/* Tambahkan lebih banyak pendidikan jika ada */}
           </div>

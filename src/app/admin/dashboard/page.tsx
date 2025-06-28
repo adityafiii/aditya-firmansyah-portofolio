@@ -682,6 +682,7 @@ export default function AdminDashboardPage() {
                     <div>
                       <h3 className="text-xl font-bold text-white mb-1">Dari: {message.name}</h3>
                       <p className="text-white text-sm mb-2">Email: {message.email}</p>
+                      <p className="text-white text-sm mb-2">Telepon: {message.phone}</p>
                       <p className="text-white text-base">{message.message}</p>
                       <p className="text-white text-xs mt-2">
                         Dikirim: {

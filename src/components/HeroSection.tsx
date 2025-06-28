@@ -20,7 +20,7 @@ export default function HeroSection() {
   const svgCenter = svgViewBoxSize / 2;
 
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-screen text-center text-white bg-white p-8 pt-24 md:pt-16 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-center min-h-screen text-center text-white bg-yellow-50 p-8 pt-24 md:pt-16 overflow-hidden">
       <div
         className="relative z-10 container mx-auto flex flex-col md:flex-row items-center gap-12 max-w-6xl"
         ref={ref}

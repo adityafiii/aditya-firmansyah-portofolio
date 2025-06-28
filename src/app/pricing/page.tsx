@@ -7,7 +7,7 @@ export default function PricingPage() {
   const pricingPlans = [
     {
       name: 'Paket Dasar',
-      price: 'Rp 3.000.000',
+      price: 'Rp 1.500.000',
       description: 'Individu atau UMKM yang membutuhkan website sederhana untuk menampilkan informasi dasar dan kontak., Proyek pribadi seperti landing page atau profil online yang ringkas., Mereka yang memiliki anggaran terbatas namun tetap ingin memiliki kehadiran online yang profesional.',
       features: [
         'Desain Responsif (1 Halaman)',
@@ -21,10 +21,10 @@ export default function PricingPage() {
     },
     {
       name: 'Paket Standar',
-      price: 'Rp 5.000.000',
+      price: 'Rp 2.500.000',
       description: 'Profesional individu (desainer, penulis, fotografer, konsultan, dll.) yang ingin menampilkan portofolio atau layanan secara lebih detail.,  UMKM dan startup yang membutuhkan website informatif dengan beberapa halaman untuk menjelaskan produk/layanan mereka.,  Mereka yang mencari solusi website yang lebih lengkap dan interaktif',
       features: [
-        'Desain Responsif (hingga 4 halaman)',
+        'Desain Responsif (hingga 3 halaman)',
         'Integrasi SEO Lanjutan',
         'Integrasi Blog / Portofolio',
         'Optimasi Performa',
@@ -37,14 +37,14 @@ export default function PricingPage() {
     },
     {
       name: 'Paket Kustom',
-      price: 'Mulai dari Rp 10.000.000',
+      price: 'Mulai dari Rp 5.000.000',
       description: 'Bisnis atau individu dengan kebutuhan website yang sangat spesifik dan unik.,  Proyek yang membutuhkan fungsionalitas kompleks (misalnya, e-commerce, sistem reservasi, integrasi API, fitur interaktif).,  Klien yang mencari solusi pengembangan website yang sepenuhnya disesuaikan dengan visi dan skala besar mereka.',
       features: [
         'Desain & Fitur Kustom',
         'Integrasi Database & API',
         'Dukungan Penuh',
         'Waktu Pengerjaan: Negosiasi',
-        'Revisi: Tidak Terbatas',
+        'Revisi: Negosiasi',
       ],
       buttonText: 'Hubungi untuk Penawaran',
       buttonLink: '/contact',

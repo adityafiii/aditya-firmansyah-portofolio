@@ -28,7 +28,7 @@ export default function AboutSection() {
           className={`text-lg md:text-3xl leading-relaxed mb-6 ${animationClasses} ${inView ? animatedInClasses : textAnimation}`} 
           style={{ transitionDelay: '0.1s' }} // Delay tambahan untuk p pertama
         >
-          Seorang mahasiswa jurusan Teknik Informatika, yang memiliki kemampuan cukup untuk membangun website yang responsif, interaktif, dan intuitif. Saya memiliki skill yang lumayan memadai untuk mengubah ide menjadi solusi digital yang estetis.
+          Seorang mahasiswa jurusan Teknik Informatika, yang memiliki kemampuan cukup untuk membangun website yang responsif, interaktif, dan intuitif. Saya memiliki skill yang memadai untuk mengubah ide menjadi solusi digital yang estetis.
           {/* Saya seorang **[Profesi Anda, misalnya: Pengembang Web Front-end]** dengan pengalaman dalam membangun aplikasi web yang responsif, intuitif, dan performa tinggi. Saya memiliki passion dalam mengubah ide menjadi solusi digital yang fungsional dan estetis. */}
         </p>
         {/* Tombol ke halaman About yang lebih detail */}
