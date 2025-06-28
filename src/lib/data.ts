@@ -23,7 +23,7 @@ export const projects: projects[] = [
     id: 'my-personal-portfolio-website2', // ID unik untuk proyek ini
     title: 'Website Portofolio Pribadi', // Judul proyek
     description: 'Website portofolio modern dan responsif yang dibangun untuk menampilkan proyek dan keahlian saya. Dilengkapi dengan panel admin untuk manajemen konten.', // Deskripsi proyek
-    imageUrl: '/images/proyekportoo.png', // <-- GANTI DENGAN PATH KE SCREENSHOT WEBSITE ANDA DI public/images/
+    imageUrl: '/images/porto1.png', // <-- GANTI DENGAN PATH KE SCREENSHOT WEBSITE ANDA DI public/images/
     technologies: ['Next.js', 'React.js', 'Tailwind CSS', 'Firebase (Firestore, Auth)'], // Teknologi yang digunakan
     story: [
       {
