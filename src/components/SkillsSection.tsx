@@ -10,21 +10,21 @@ const skills = [
     description: 'Web development adalah proses membangun dan memelihara situs web atau aplikasi web. Ini mencakup semua hal yang terlibat dalam membuat sebuah situs agar terlihat menarik, berfungsi dengan baik, dan bisa diakses oleh pengguna di internet.'
   },
   { 
-    name: 'Web Design', 
-    category: 'Web Desain',
-    description: 'Web Design adalah proses merancang tampilan dan pengalaman pengguna pada website agar menarik dan mudah digunakan.'
+    name: 'Fotografi', 
+    category: 'Visual Art',
+    description: 'Fotografi adalah seni menangkap gambar menggunakan cahaya. Ini melibatkan kombinasi pengaturan kamera agar mendapatkan jenis foto yang di inginkan.'
   },
   { 
-    name: 'Git & GitHub', 
-    category: 'Version Control',
-    description: 'Git adalah sistem kontrol versi terdistribusi, sedangkan GitHub adalah platform hosting kode berbasis Git untuk kolaborasi.'
+    name: 'Basket', 
+    category: 'Sport',
+    description: 'Bola basket adalah olahraga tim yang dimainkan oleh dua tim.. Tujuan utamanya adalah mencetak poin dengan cara melemparkan bola melalui ring lawan, sambil mencegah tim lawan melakukan hal yang sama. Ini adalah olahraga yang sangat dinamis, membutuhkan kombinasi kecepatan, kelincahan, koordinasi mata-tangan, dan strategi tim.'
   },
   { 
-    name: 'Firebase', 
-    category: 'Database',
-    description: 'Firebase adalah platform backend-as-a-service dari Google yang menyediakan database realtime, autentikasi, dan hosting.'
+    name: 'Guitar', 
+    category: 'Music',
+    description: 'Gitar adalah alat musik berdawai yang dimainkan dengan cara dipetik, baik menggunakan jari maupun alat bantu bernama plektrum (pick). Skill saya di gitar bisa dibilang advanced karena saya bisa memainkan gitar pada tingkat fingerstyle.'
   },
-];
+  ];
 
 export default function SkillsSection() {
   const [ref, inView] = useInView({ threshold: 0.1 });

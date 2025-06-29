@@ -9,11 +9,12 @@ export default function ContactPage() {
     name: '',
     email: '',
     phone: '',
+    service: '', // Tambahkan state untuk layanan yang dipilih
     message: ''
   });
   const [status, setStatus] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => { // Tambahkan HTMLSelectElement
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -26,12 +27,14 @@ export default function ContactPage() {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
+        service: formData.service, // Kirim data layanan ke Firestore
         message: formData.message,
         timestamp: serverTimestamp(), // Menambahkan timestamp otomatis dari Firestore
       });
       console.log("Pesan dikirim dengan ID: ", docRef.id);
       setStatus('Pesan berhasil dikirim!');
-      setFormData({ name: '', email: '', phone: '', message: '' }); // Reset form
+      // Reset form, termasuk service
+      setFormData({ name: '', email: '', phone: '', service: '', message: '' });
     } catch (error) {
       console.error("Error saat mengirim pesan ke Firestore: ", error);
       setStatus('Terjadi kesalahan saat mengirim pesan.');
@@ -102,6 +105,27 @@ export default function ContactPage() {
                     />
                   </div>
                 </div>
+
+                {/* START: Tambah Form Pilih Layanan */}
+                <div>
+                  <label htmlFor="service" className="block text-black text-sm font-bold mb-2">Pilih Layanan</label>
+                  <select
+                    id="service"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    className="shadow appearance-none border rounded w-full py-3 px-4 text-white leading-tight focus:outline-none focus:shadow-outline bg-[#2d2926] border-black focus:border-blue-500 transition-colors duration-200"
+                    required
+                  >
+                    <option value="">-- Pilih Layanan --</option>
+                    <option value="Web Development Dasar">Web Development Dasar</option>
+                    <option value="Web Development Standar">Web Development Standar</option>
+                    <option value="Web Development Kustom">Web Development Kustom</option>
+                    <option value="Sewa Kamera">Sewa Kamera</option>
+                  </select>
+                </div>
+                {/* END: Tambah Form Pilih Layanan */}
+
                 <div>
                   <label htmlFor="message" className="block text-black text-sm font-bold mb-2">Pesan Anda</label>
                   <textarea

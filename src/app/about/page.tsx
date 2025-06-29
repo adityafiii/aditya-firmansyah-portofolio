@@ -29,8 +29,8 @@ export default function AboutPage() {
   // };
 
   const paragraph1 = `Halo! Saya ADITYA, seorang mahasiswa dan pengembang web yang bersemangat dalam membangun aplikasi web modern dan efisien. Sejak tahun 2025, saya memulai fokus menciptakan pengalaman pengguna yang luar biasa melalui teknologi.`;
-  const paragraph2 = `Skill saya untuk membangun sebuah web tergolong cukup mahir khususnya mengembangkan antarmuka pengguna yang responsif dan menarik. Selain itu, saya juga akrb dengan Firebase sebagai platform backend, GitHub untuk manajemen versi dan kolaborasi, serta Figma untuk desain dan prototyping UI/UX, memastikan saya dapat membangun website yang terstruktur dari awal hingga akhir.`;
-  const paragraph3 = `Saya berkomitmen untuk menghasilkan kode yang bersih, desain yang baik, dan selalu siap menghadapi tantangan baru untuk menciptakan solusi inovatif.`;
+  const paragraph2 = `Skill saya untuk membangun sebuah web tergolong cukup mahir, khususnya dalam mengembangkan antarmuka pengguna yang responsif dan menarik. Selain itu, saya juga akrab dengan Firebase sebagai platform backend, GitHub untuk manajemen versi dan kolaborasi, serta Figma untuk desain dan prototyping UI/UX, memastikan saya dapat membangun situs web yang terstruktur dari awal hingga akhir.`;
+  const paragraph3 = `Di luar dunia pengembangan web, saya memiliki minat dan keahlian di berbagai bidang lain. Saya seorang fotografer yang senang menangkap momen dan cerita melalui lensa. Saya juga seorang musisi yang aktif bermain gitar dan keyboard digital, mengeksplorasi melodi dan harmoni. Selain itu, basket adalah salah satu hobi saya yang membantu saya menjaga kebugaran dan semangat kompetitif.`;
 
   // Pastikan 'return' dan '(' dan '<main>' berada di baris yang sama
   return (<main className="min-h-screen pt-16 bg-yellow-50 text-white overflow-hidden"> {/* overflow-hidden di main */}
@@ -109,8 +109,26 @@ export default function AboutPage() {
               className={`${animationClasses} ${activityInView ? animatedInClasses : revealY}`} 
               style={{ transitionDelay: '0.1s' }}
             >
-              <h3 className="text-2xl font-bold text-black">Sagaraku Website</h3>
+              <h3 className="text-2xl font-bold text-black">Sagaraku Website (2025)</h3>
               <p className="text-black text-lg">Bekerja sama untuk dalam pembuatan website UMKM Maritim </p>
+            </div>
+            <div 
+              className={`${animationClasses} ${activityInView ? animatedInClasses : revealY}`} 
+              style={{ transitionDelay: '0.1s' }}
+            >
+              <h3 className="text-2xl font-bold text-black">Lomba Basket 3x3 Internal cup UMRAH (2023)</h3>
+            </div>
+            <div 
+              className={`${animationClasses} ${activityInView ? animatedInClasses : revealY}`} 
+              style={{ transitionDelay: '0.1s' }}
+            >
+              <h3 className="text-2xl font-bold text-black">Lomba Basket 3x3 UMRAH (2024)</h3>
+            </div>
+            <div 
+              className={`${animationClasses} ${activityInView ? animatedInClasses : revealY}`} 
+              style={{ transitionDelay: '0.1s' }}
+            >
+              <h3 className="text-2xl font-bold text-black">Lomba Film Pendek Bank Indonesia (2025)</h3>
             </div>
             {/* Tambahkan lebih banyak pengalaman jika ada */}
           </div>
@@ -133,8 +151,14 @@ export default function AboutPage() {
               className={`${animationClasses} ${activityInView ? animatedInClasses : revealY}`} 
               style={{ transitionDelay: '0.1s' }}
             >
-              <h3 className="text-2xl font-bold text-black">HMTI</h3>
-              <p className="text-black text-lg">Bagian Aspirasi Minat Bakat (2022)</p>
+              <h3 className="text-2xl font-bold text-black">HMTI (2022)</h3>
+              <p className="text-black text-lg">Bagian Aspirasi Minat Bakat</p>
+            </div>
+            <div 
+              className={`${animationClasses} ${activityInView ? animatedInClasses : revealY}`} 
+              style={{ transitionDelay: '0.1s' }}
+            >
+              <h3 className="text-2xl font-bold text-black">UKM Basket UMRAH (2022 - 2024)</h3>
             </div>
             {/* Tambahkan lebih banyak pengalaman jika ada */}
           </div>
@@ -158,7 +182,7 @@ export default function AboutPage() {
               className={`${animationClasses} ${experienceInView ? animatedInClasses : revealY}`} 
               style={{ transitionDelay: '0.1s' }}
             >
-              <h3 className="text-2xl font-bold text-black">Magang</h3>
+              <h3 className="text-2xl font-bold text-black">Magang (2019)</h3>
               <p className="text-black text-lg">PT. Telkom Indonesia | Tanjungpinang, Indonesia</p>
               <ul className="list-disc list-inside text-black mt-2 space-y-1 inline-block text-left">
                 <li>Berfokus Untuk Melakukan Pemasangan dan Konfigurasi Jaringan Wireless</li>

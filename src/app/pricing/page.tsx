@@ -1,26 +1,23 @@
 // src/app/pricing/page.tsx
 'use client'; // PENTING: Directive ini diperlukan karena menggunakan hook React
-import Link from 'next/link';
 import { useInView } from '@/hooks/useInView'; // Import hook useInView
 
 export default function PricingPage() {
   const pricingPlans = [
     {
-      name: 'Paket Dasar',
-      price: 'Rp 500.000',
+      name: 'Web Development Dasar',
+      price: 'Mulai dari Rp 250.000',
       description: 'Individu atau UMKM yang membutuhkan website sederhana untuk menampilkan informasi dasar dan kontak., Proyek pribadi seperti landing page atau profil online yang ringkas., Mereka yang memiliki anggaran terbatas namun tetap ingin memiliki kehadiran online yang profesional.',
       features: [
         'Desain Responsif (1 Halaman)',
         'Waktu Pengerjaan: 2 Minggu',
         'Revisi: 1 Kali',
       ],
-      buttonText: 'Pilih Paket Dasar',
-      buttonLink: '/contact',
       isFeatured: false,
     },
     {
-      name: 'Paket Standar',
-      price: 'Rp 1.000.000',
+      name: 'Web Development Standar',
+      price: 'Mulai dari Rp 500.000',
       description: 'Profesional individu (desainer, penulis, fotografer, konsultan, dll.) yang ingin menampilkan portofolio atau layanan secara lebih detail.,  UMKM dan startup yang membutuhkan website informatif dengan beberapa halaman untuk menjelaskan produk/layanan mereka.,  Mereka yang mencari solusi website yang lebih lengkap dan interaktif',
       features: [
         'Desain Responsif (hingga 3 halaman)',
@@ -29,13 +26,11 @@ export default function PricingPage() {
         'Waktu Pengerjaan: 4 Minggu',
         'Revisi: 2 Kali',
       ],
-      buttonText: 'Pilih Paket Standar',
-      buttonLink: '/contact',
-      isFeatured: true, // Untuk highlight paket ini
+      isFeatured: true,
     },
     {
-      name: 'Paket Kustom',
-      price: 'Mulai dari Rp 1.500.000',
+      name: 'Web Development Kustom',
+      price: 'Mulai dari Rp 1.000.000',
       description: 'Bisnis atau individu dengan kebutuhan website yang sangat spesifik dan unik.,  Proyek yang membutuhkan fungsionalitas kompleks (misalnya, e-commerce, sistem reservasi, integrasi API, fitur interaktif).,  Klien yang mencari solusi pengembangan website yang sepenuhnya disesuaikan dengan visi dan skala besar mereka.',
       features: [
         'Desain & Fitur Kustom',
@@ -44,8 +39,19 @@ export default function PricingPage() {
         'Waktu Pengerjaan: Negosiasi',
         'Revisi: Negosiasi',
       ],
-      buttonText: 'Hubungi untuk Penawaran',
-      buttonLink: '/contact',
+      isFeatured: false,
+    },
+    {
+      name: 'Sewa Kamera',
+      price: 'Rp 150.000/hari',
+      description: 'Individu atau profesional yang membutuhkan kamera untuk acara khusus seperti pernikahan, acara perusahaan, atau sesi foto pribadi.,  Fotografer yang ingin mencoba peralatan baru sebelum membeli.,  Mereka yang membutuhkan kamera berkualitas tinggi untuk proyek jangka pendek. Kunjungin Instagram sewkam.tpi untuk dapatkan informasi lebih lanjut',
+      features: [
+        'Canon Eos M50 Mark II',
+        '2 Lensa (15-45mm & 50mm)',
+        '2 buah baterai dan charger',
+        'Memori Card 32GB',
+        'Tas dan Strap Kamera',
+      ],
       isFeatured: false,
     },
   ];
@@ -125,15 +131,7 @@ export default function PricingPage() {
                   ))}
                 </ul>
 
-                <Link
-                  href={plan.buttonLink}
-                  className={`
-                    mt-auto w-full py-3 px-6 rounded-full font-semibold transition-all duration-300 shadow-lg transform hover:scale-105
-                    ${plan.isFeatured ? 'bg-yellow-50 hover:bg-orange-500 text-black' : 'border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white'}
-                  `}
-                >
-                  {plan.buttonText}
-                </Link>
+    
               </div>
             ))}
           </div>

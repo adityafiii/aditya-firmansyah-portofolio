@@ -29,7 +29,17 @@ export default function AdminDashboardPage() {
   const [editingArticleSections, setEditingArticleSections] = useState([{ title: '', content: '' }]);
 
   // Pesan
-  const [messages, setMessages] = useState<any[]>([]);
+  // Perbarui tipe state untuk messages agar menyertakan 'service'
+  interface Message {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    service?: string; // Tambahkan properti service
+    message: string;
+    timestamp: any;
+  }
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(true);
 
   // Proteksi login & session 1 jam
@@ -222,9 +232,9 @@ export default function AdminDashboardPage() {
   const fetchMessages = async () => {
     setLoadingMessages(true);
     try {
-      const q = collection(db, "messages");
+      const q = query(collection(db, "messages"), orderBy("timestamp", "desc")); // Tambahkan orderBy untuk pesan terbaru di atas
       const querySnapshot = await getDocs(q);
-      const messagesData = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      const messagesData = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() })) as Message[]; // Cast ke Message[]
       setMessages(messagesData);
     } catch (error) {
       console.error("Error fetching messages: ", error);
@@ -308,7 +318,7 @@ export default function AdminDashboardPage() {
           </nav>
         </div>
 
-        {/* Konten Proyek */}
+        {/* Konten Proyek (tidak ada perubahan) */}
         {activeTab === 'projects' && (
           <div>
             {/* Form Tambah/Edit Proyek */}
@@ -478,7 +488,7 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* Konten Artikel */}
+        {/* Konten Artikel (tidak ada perubahan) */}
         {activeTab === 'articles' && (
           <div>
             <div className="bg-[#2d2926] p-6 rounded-lg shadow-xl mb-8">
@@ -683,6 +693,11 @@ export default function AdminDashboardPage() {
                       <h3 className="text-xl font-bold text-white mb-1">Dari: {message.name}</h3>
                       <p className="text-white text-sm mb-2">Email: {message.email}</p>
                       <p className="text-white text-sm mb-2">Telepon: {message.phone}</p>
+                      {/* START: Tampilkan Layanan yang Dipilih */}
+                      {message.service && (
+                        <p className="text-white text-sm mb-2">Layanan yang dipilih: {message.service}</p>
+                      )}
+                      {/* END: Tampilkan Layanan yang Dipilih */}
                       <p className="text-white text-base">{message.message}</p>
                       <p className="text-white text-xs mt-2">
                         Dikirim: {
